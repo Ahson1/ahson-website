@@ -85,7 +85,7 @@ function TitleCard({
           ref={eyebrowRef}
           className="text-xs font-medium uppercase tracking-[0.3em] text-[var(--accent)] sm:text-sm"
         >
-          Healthcare AI
+          AI Product Operator
         </p>
         <p
           className="mt-3 font-semibold leading-[0.92] tracking-[-0.02em] text-white"

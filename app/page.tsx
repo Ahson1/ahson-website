@@ -1,6 +1,7 @@
 import DepthGauge from "@/app/components/DepthGauge";
 import DiveScrubber from "@/app/components/DiveScrubber";
 import SiteContent from "@/app/components/SiteContent";
+import SiteNav from "@/app/components/SiteNav";
 
 /**
  * Home
@@ -13,6 +14,8 @@ import SiteContent from "@/app/components/SiteContent";
 export default function Home() {
   return (
     <>
+      {/* Site chrome: stays hidden through the dive, slides in past the hero. */}
+      <SiteNav />
       <DiveScrubber />
       <SiteContent />
       {/* Fixed instrumentation: tracks scroll depth across the whole page. */}

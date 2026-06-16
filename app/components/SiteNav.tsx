@@ -1,0 +1,112 @@
+"use client";
+
+/**
+ * SiteNav
+ * ----------------------------------------------------------------------------
+ * A restrained top navigation that stays OUT of the cinematic dive. During the
+ * hero the nav is hidden, so the dive title card and corner wordmark own the
+ * frame uninterrupted. Once the visitor scrolls past the opening, the bar
+ * slides down: wordmark on the left, a short set of section links on the right,
+ * over a faint blur + hairline so it reads as quiet site chrome, not a banner.
+ *
+ * Restraint / consistency with the rest of the site:
+ *  - No logo soup, no mega-menu. One wordmark, three links, one accent CTA.
+ *  - Reveal is a single state flip across a scroll threshold (not per-frame
+ *    React churn): a rAF-throttled scroll handler toggles a ref-guarded class.
+ *  - Colours come from the same CSS variables as everything else.
+ *  - Under prefers-reduced-motion the bar simply appears (no slide), and anchor
+ *    jumps are instant rather than smooth-scrolled.
+ */
+
+import { useEffect, useRef, useState } from "react";
+
+/** Section links, in page order. `cta` gets the amber treatment. */
+const LINKS: { label: string; href: string; cta?: boolean; hideSm?: boolean }[] =
+  [
+    { label: "Work", href: "#work" },
+    { label: "Approach", href: "#how-i-build", hideSm: true },
+    { label: "Contact", href: "#contact", cta: true },
+  ];
+
+export default function SiteNav() {
+  // `shown` controls the slide/fade. We flip it once per threshold crossing.
+  const [shown, setShown] = useState(false);
+  const shownRef = useRef(false);
+
+  useEffect(() => {
+    let raf = 0;
+    let queued = false;
+
+    // Reveal once past ~70% of the first viewport, so the dive hero is clear.
+    const threshold = () => window.innerHeight * 0.7;
+
+    const apply = () => {
+      queued = false;
+      const next = window.scrollY > threshold();
+      if (next !== shownRef.current) {
+        shownRef.current = next;
+        setShown(next);
+      }
+    };
+
+    const onScroll = () => {
+      if (!queued) {
+        queued = true;
+        raf = requestAnimationFrame(apply);
+      }
+    };
+
+    apply();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  return (
+    <header
+      className={
+        "fixed inset-x-0 top-0 z-40 transition-[opacity,transform] duration-500 ease-[cubic-bezier(.23,1,.32,1)] motion-reduce:transition-none " +
+        (shown
+          ? "translate-y-0 opacity-100"
+          : "pointer-events-none -translate-y-full opacity-0")
+      }
+    >
+      {/* Faint blur + hairline so the bar separates from content without a hard
+          fill. The gradient keeps the left/right edges legible over any frame. */}
+      <div className="border-b border-[var(--hairline)] bg-[color-mix(in_oklab,var(--underwater-blue)_72%,transparent)] backdrop-blur-md backdrop-saturate-150">
+        <nav className="mx-auto flex h-14 w-full max-w-3xl items-center justify-between px-6 sm:h-16 sm:px-8">
+          {/* Wordmark -> back to the top of the dive. */}
+          <a
+            href="#top"
+            className="text-sm font-medium tracking-tight text-[var(--foreground)] transition-opacity duration-200 hover:opacity-70"
+          >
+            Ahson Kamal
+          </a>
+
+          <div className="flex items-center gap-5 sm:gap-7">
+            {LINKS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className={
+                  "text-sm transition-colors duration-200 " +
+                  (l.hideSm ? "hidden sm:inline " : "") +
+                  (l.cta
+                    ? "text-[var(--accent)] hover:text-[var(--accent-strong)]"
+                    : "text-[var(--muted)] hover:text-[var(--foreground)]")
+                }
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </nav>
+      </div>
+    </header>
+  );
+}

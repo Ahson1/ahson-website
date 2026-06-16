@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI systems for messy healthcare workflows",
+  title: "Ahson Kamal — AI systems for messy real-world workflows",
   description:
-    "Solo technical founder building clinical tooling that holds up against the real-world mess of how care gets delivered.",
+    "AI product operator and technical founder. I design, build, and ship AI systems for complex, high-trust workflows, with deep healthcare experience.",
 };
 
 // Keep the browser chrome in the same underwater blue as the page background.

@@ -54,6 +54,13 @@
 
 html {
   background: var(--ink);
+  /* Smooth anchor jumps from the nav (neutralized under reduced motion below). */
+  scroll-behavior: smooth;
+}
+
+/* Anchored sections clear the fixed nav so headings aren't tucked under it. */
+section[id] {
+  scroll-margin-top: 5rem;
 }
 
 body {

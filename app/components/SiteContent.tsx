@@ -59,6 +59,50 @@ const WORK: {
   },
 ];
 
+/**
+ * PROOF - the credibility section. Short, concrete, operator-led. Frames
+ * healthcare as the domain where the discipline was learned, not the whole
+ * identity. Each line is a plain statement of what was actually done.
+ */
+const PROOF: string[] = [
+  "Led AI receptionist work at HealthEngine, live in real GP clinics, not a pilot.",
+  "Built and shipped AI across voice, SMS, handoff, and operational tooling.",
+  "Worked across general practice, radiology, allied health, and clinical operations.",
+  "Brings a product and operator lens to AI systems: design, evaluation, and shipping, not just prototypes.",
+];
+
+/**
+ * CAPABILITIES - what I build, framed to broaden beyond healthcare. Healthcare
+ * is the strongest example, not the boundary. Each is a capability with one
+ * line of concrete support.
+ */
+const CAPABILITIES: { title: string; body: string }[] = [
+  {
+    title: "Voice agents",
+    body: "Phone and SMS systems that answer, book, reschedule, and hand off to a human cleanly.",
+  },
+  {
+    title: "Workflow automation",
+    body: "Operational flows that absorb edge cases and interruptions instead of breaking on them.",
+  },
+  {
+    title: "Internal tools",
+    body: "Admin and reviewer tooling so teams can see, trust, and steer what the AI is doing.",
+  },
+  {
+    title: "Evaluation systems",
+    body: "Measuring quality honestly, with call review and version tracking, before trusting a model with more.",
+  },
+  {
+    title: "AI product strategy",
+    body: "Deciding what to build, what to automate, and when, with a clear path from prototype to production.",
+  },
+  {
+    title: "Prototype to production",
+    body: "Taking AI from a working demo to a system that survives real, high-trust operations.",
+  },
+];
+
 export default function SiteContent() {
   return (
     <main
@@ -91,13 +135,17 @@ export default function SiteContent() {
         <DepthMarker zone="Sunlight" depth="0-200 m" />
 
         <h1 className="max-w-2xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight text-[var(--foreground)] sm:text-5xl md:text-6xl">
-          I build AI systems for messy healthcare workflows.
+          I build AI systems for messy real-world workflows.
         </h1>
 
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-          Solo technical founder. I design, build, and ship clinical tooling
-          that holds up against the real-world mess of how care actually gets
-          delivered.
+          AI product operator and technical founder. I design, build, and ship
+          AI systems for complex, high-trust workflows.
+        </p>
+
+        <p className="mt-4 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
+          Deep healthcare experience, now applied across industries where the
+          work is operational, regulated, and unforgiving.
         </p>
 
         <div className="mt-10">
@@ -105,7 +153,7 @@ export default function SiteContent() {
             href="#contact"
             className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--accent)] px-7 text-base font-medium text-[var(--accent-ink)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(.23,1,.32,1)] hover:bg-[var(--accent-strong)] hover:-translate-y-0.5"
           >
-            Get in touch
+            Discuss an AI workflow
           </a>
         </div>
       </section>
@@ -116,13 +164,50 @@ export default function SiteContent() {
 
       {/*
         ====================================================================
+        PROOF  (Sunlight) - credibility, early. Healthcare framed as the place
+        the discipline was learned, not the whole identity. Lead line broadens
+        it back out; the dotted list keeps the proof concrete and scannable.
+        ====================================================================
+      */}
+      <section className="mx-auto w-full max-w-3xl px-6 py-24 sm:px-8 sm:py-32">
+        <h2 className="text-balance text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
+          Built for trust, not demos.
+        </h2>
+
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
+          Healthcare is where I learned to build AI for trust, edge cases, and
+          operational complexity. I now apply that same discipline to AI systems
+          across complex, high-trust workflows.
+        </p>
+
+        <ul className="mt-10 space-y-5">
+          {PROOF.map((line) => (
+            <li
+              key={line}
+              className="flex gap-3.5 text-base leading-relaxed text-[var(--muted)]"
+            >
+              <span
+                aria-hidden
+                className="mt-2.5 inline-block h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]"
+              />
+              <span className="max-w-xl">{line}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/*
+        ====================================================================
         SELECTED WORK  (~Sunlight / upper Twilight) - the centerpiece.
         Project, the org it ran in, what it did in the real world, and a
         quiet metric line. Hairline-separated, no boxed cards, no icons -
         the org companion + metric line set it apart from "How I build".
         ====================================================================
       */}
-      <section className="mx-auto w-full max-w-3xl px-6 py-24 sm:px-8 sm:py-32">
+      <section
+        id="work"
+        className="mx-auto w-full max-w-3xl px-6 py-24 sm:px-8 sm:py-32"
+      >
         {/* No zone label here: the hero already marks Sunlight and "How I build"
             marks Twilight. Selected Work rides the transition between them, so a
             third marker would only announce what the deepening already says. */}
@@ -169,12 +254,54 @@ export default function SiteContent() {
 
       {/*
         ====================================================================
+        WHAT I BUILD  (upper Twilight) - capability framing. Placed AFTER the
+        healthcare-heavy proof so it explicitly broadens the work back out:
+        healthcare is the strongest example, not the boundary. Two-column on
+        desktop, single column on mobile; quiet, scannable, no icons.
+        ====================================================================
+      */}
+      <section
+        id="what-i-build"
+        className="mx-auto w-full max-w-3xl px-6 py-24 sm:px-8 sm:py-32"
+      >
+        <h2 className="text-balance text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
+          What I build
+        </h2>
+
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
+          AI systems for the messy middle, from strategy through to production.
+          Healthcare is the strongest example, not the boundary.
+        </p>
+
+        <div className="mt-12 grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2">
+          {CAPABILITIES.map((c) => (
+            <div key={c.title}>
+              <h3 className="flex items-center gap-2.5 text-lg font-medium leading-snug tracking-tight text-[var(--foreground)]">
+                <span
+                  aria-hidden
+                  className="inline-block h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]"
+                />
+                {c.title}
+              </h3>
+              <p className="mt-3 text-base leading-relaxed text-[var(--muted)]">
+                {c.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/*
+        ====================================================================
         HOW I BUILD  (Twilight zone)
         Three stacked convictions, separated by hairlines. Not boxed cards,
         no icons - each is a lead statement with a quiet line of support.
         ====================================================================
       */}
-      <section className="mx-auto w-full max-w-3xl px-6 py-24 sm:px-8 sm:py-32">
+      <section
+        id="how-i-build"
+        className="mx-auto w-full max-w-3xl px-6 py-24 sm:px-8 sm:py-32"
+      >
         <DepthMarker zone="Twilight" depth="200-1000 m" />
 
         <h2 className="text-balance text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
@@ -188,9 +315,10 @@ export default function SiteContent() {
               you.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-              Capabilities move faster than roadmaps. I design systems whose
-              hard parts are the data, the workflow, and the trust, so the model
-              underneath can be swapped for a better one without a rewrite.
+              Capabilities move faster than roadmaps. I keep the hard parts in
+              the data, the workflow, and the trust, with model-agnostic
+              architecture underneath, so the model can be swapped for a better
+              one without a rewrite.
             </p>
           </div>
 
@@ -199,10 +327,10 @@ export default function SiteContent() {
               Earn trust before you automate.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-              In clinical settings, a wrong answer delivered confidently is
-              worse than no answer. I ship assistance first, measure it
-              honestly, and only hand over control once the evidence says it has
-              earned the seat.
+              In high-trust workflows, a confident wrong answer is worse than no
+              answer. I ship assistance first, track prompts and versions,
+              review real calls and outputs, and only hand over control once
+              evaluation says it has earned the seat.
             </p>
           </div>
 
@@ -211,12 +339,45 @@ export default function SiteContent() {
               Ship into the mess, not the demo.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-              Real clinics have interruptions, accents, missing fields, and
-              edge cases that never appear in a polished demo. I build against
-              that reality from day one, because that is the only place the work
-              actually has to hold.
+              Real operations have interruptions, accents, missing fields,
+              handoffs, and edge cases that never appear in a polished demo. I
+              design for admin, clinician, customer, and internal-user workflows
+              from day one, because that is the only place the work actually has
+              to hold.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/*
+        ====================================================================
+        CURRENT FOCUS  (~Twilight / Midnight) - what I'm building right now.
+        Introduces Accelevate without making the whole site healthcare-only:
+        healthcare is named as the initial wedge, then the framing widens to
+        any workflow that has to hold under real conditions.
+        ====================================================================
+      */}
+      <section
+        id="current-focus"
+        className="mx-auto w-full max-w-3xl px-6 py-24 sm:px-8 sm:py-32"
+      >
+        <h2 className="text-balance text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
+          Current focus
+        </h2>
+
+        <div className="mt-8 max-w-xl space-y-6">
+          <p className="text-lg leading-relaxed text-[var(--muted)]">
+            I&rsquo;m building{" "}
+            <span className="text-[var(--foreground)]">Accelevate</span>:
+            evaluation-first AI agents and workflow systems. The work is voice
+            AI, operational automation, and tooling for AI that can be reviewed,
+            trusted, and improved over time.
+          </p>
+          <p className="text-lg leading-relaxed text-[var(--muted)]">
+            Healthcare is the initial wedge, because it is complex, regulated,
+            and operationally unforgiving. The same systems generalise to any
+            workflow that has to hold under real conditions.
+          </p>
         </div>
       </section>
 
@@ -235,11 +396,12 @@ export default function SiteContent() {
 
         <div className="mt-8 max-w-xl space-y-6">
           <p className="text-lg leading-relaxed text-[var(--muted)]">
-            I&rsquo;m a solo technical founder in Sydney, around ten years across
-            healthcare technology and production AI, biomedical engineering
-            background. I built Helen at HealthEngine and was founding PM at
-            Avoca before starting Accelevate. I care about tooling that survives
-            contact with a real clinic, not tooling that looks good in a demo.
+            I&rsquo;m an AI product operator and technical founder in Sydney,
+            around ten years across healthcare technology and production AI, with
+            a biomedical engineering background. I built Helen at HealthEngine,
+            was founding PM at Avoca, and now run Accelevate. I care about AI that
+            survives contact with real operations, not AI that looks good in a
+            demo.
           </p>
           <p className="text-lg leading-relaxed text-[var(--muted)]">
             When I&rsquo;m not building, I&rsquo;m usually in the water or under
@@ -293,9 +455,9 @@ export default function SiteContent() {
         </h2>
 
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-          If you are building clinical tooling, or buying it for a clinic, and
-          you want it to survive contact with the real world, I would like to
-          hear about it.
+          If you are building an AI product, automating a complex workflow, or
+          trying to get AI from demo to production, I would like to hear about
+          it.
         </p>
 
         <div className="mt-10">
@@ -303,16 +465,16 @@ export default function SiteContent() {
             href="mailto:hello@ahsonkamal.com"
             className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--accent)] px-7 text-base font-medium text-[var(--accent-ink)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(.23,1,.32,1)] hover:bg-[var(--accent-strong)] hover:-translate-y-0.5"
           >
-            Email me
+            Talk to me about an AI product
           </a>
         </div>
 
         {/* CURRENTLY - a quiet line of presence, not a status badge. */}
         <p className="mt-16 max-w-xl text-sm leading-relaxed text-[var(--muted)]">
           Currently building{" "}
-          <span className="text-[var(--foreground)]">Accelevate</span>, AI voice
-          and SMS for allied health clinics, and writing about
-          evaluation-first voice AI.
+          <span className="text-[var(--foreground)]">Accelevate</span>,
+          evaluation-first voice AI and workflow automation, and writing about
+          building AI systems that can be trusted in production.
         </p>
       </section>
       </div>
