@@ -1,5 +1,7 @@
 import DepthMarker from "@/app/components/DepthMarker";
 import ExperienceStrip from "@/app/components/ExperienceStrip";
+import FishWordmark from "@/app/components/FishWordmark";
+import KineticHeading from "@/app/components/KineticHeading";
 import SeaGallery from "@/app/components/SeaGallery";
 import TheTurn from "@/app/components/TheTurn";
 import UnderwaterBackdrop from "@/app/components/UnderwaterBackdrop";
@@ -133,19 +135,23 @@ export default function SiteContent() {
       <section className="mx-auto flex min-h-[82dvh] w-full max-w-3xl flex-col justify-start px-6 pb-24 pt-[18vh] sm:px-8">
         <DepthMarker zone="Sunlight" depth="0-200 m" />
 
-        <h1 className="max-w-2xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight text-[var(--foreground)] sm:text-5xl md:text-6xl">
+        <KineticHeading className="max-w-2xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight text-[var(--foreground)] sm:text-5xl md:text-6xl">
           I build AI systems for messy real-world workflows.
-        </h1>
+        </KineticHeading>
 
-        <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
+        <p
+          data-enter
+          className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]"
+        >
           Product operator and technical founder. Ten years building voice and
           workflow AI in healthcare, where the edge cases are not edge cases.
           They are the job.
         </p>
 
-        <div className="mt-10">
+        <div data-enter className="mt-10">
           <a
             href="#contact"
+            data-magnetic
             className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--accent)] px-7 text-base font-medium text-[var(--accent-ink)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(.23,1,.32,1)] hover:bg-[var(--accent-strong)] hover:-translate-y-0.5"
           >
             Bring me a workflow
@@ -343,6 +349,16 @@ export default function SiteContent() {
 
       {/*
         ====================================================================
+        MASKED FISH WORDMARK (Twilight -> Midnight) - the showpiece. A full-bleed
+        breath in the descent: the painted fish loop shows only through the word,
+        dark water everywhere else. Self-contained client engine, ScrollTrigger
+        parallax, reduced-motion serves the poster through the same mask.
+        ====================================================================
+      */}
+      <FishWordmark />
+
+      {/*
+        ====================================================================
         CURRENT FOCUS  (~Twilight / Midnight) - what I'm building right now.
         Introduces Accelevate without making the whole site healthcare-only:
         healthcare is named as the initial wedge, then the framing widens to
@@ -473,6 +489,7 @@ export default function SiteContent() {
         <div className="mt-10">
           <a
             href="mailto:hello@ahson.com.au"
+            data-magnetic
             className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--accent)] px-7 text-base font-medium text-[var(--accent-ink)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(.23,1,.32,1)] hover:bg-[var(--accent-strong)] hover:-translate-y-0.5"
           >
             Talk to me about an AI product

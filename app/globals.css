@@ -394,3 +394,130 @@ body {
     transform: scale(1.06) translateY(-1.5%);
   }
 }
+
+/*
+  ----------------------------------------------------------------------------
+  GSAP MOTION LAYER (ScrollTrigger only - no global ScrollSmoother)
+  Loader wipe, custom cursor, and the masked fish wordmark. All transform/opacity
+  only; every piece has a reduced-motion path in its component.
+  ----------------------------------------------------------------------------
+*/
+
+/* Loader: full-bleed off-black tinted to the page hue, above everything. The
+   background matches the mark's own field (rgb 10 14 18) so no box edge shows. */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #0a0e12;
+  clip-path: inset(0 0 0% 0);
+  will-change: clip-path;
+}
+.loader-mark {
+  will-change: transform, opacity;
+}
+.loader-mark img {
+  width: clamp(96px, 16vw, 148px);
+  height: auto;
+  display: block;
+}
+
+/* Custom cursor: a trailing ring + a tight dot. Centered on the point via
+   negative margins so GSAP x/y (transforms) position the center. */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+.cursor-ring,
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  pointer-events: none;
+  border-radius: 999px;
+  will-change: transform;
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1.5px solid color-mix(in oklab, var(--accent) 80%, transparent);
+}
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--accent);
+}
+
+/* Masked fish wordmark band. */
+.fish-band {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: clamp(260px, 44vh, 440px);
+  overflow: hidden;
+  background: var(--depth-midnight);
+  color: var(--depth-midnight); /* drives the SVG panel fill via currentColor */
+  isolation: isolate;
+}
+.fish-media {
+  position: absolute;
+  inset: -14% 0; /* oversize vertically so the parallax drift never gaps */
+  z-index: 0;
+  will-change: transform;
+}
+.fish-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.fish-mask {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+.fish-word {
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: 230px;
+  letter-spacing: 6px;
+}
+.fish-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 92% at 50% 50%,
+    transparent 44%,
+    color-mix(in oklab, var(--depth-abyss) 72%, transparent) 100%
+  );
+}
+/* Soften the hard top/bottom edges into the surrounding depth gradient. */
+.fish-band::before,
+.fish-band::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 20%;
+  z-index: 2;
+  pointer-events: none;
+}
+.fish-band::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--depth-twilight), transparent);
+}
+.fish-band::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--depth-abyss), transparent);
+}
