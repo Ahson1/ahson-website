@@ -38,24 +38,24 @@ const WORK: {
   {
     project: "Helen",
     org: "HealthEngine",
-    body: "Australia's first AI receptionist for GP clinics. I built it to answer calls, book appointments, and handle routine requests so front desks could stop drowning in the phone queue, and it went live in real practices with real patients, not a pilot.",
-    metric: "clinics live · calls handled · booking rate",
+    body: "Australia's first AI receptionist for GP clinics. It answers calls, books appointments, and clears the routine requests that bury a front desk. Live in ~100 real practices with real patients.",
+    metric: "~100 clinics live · [X] calls handled · [X]% booking rate",
   },
   {
     project: "Radiology Voice AI",
     org: "Avoca",
-    body: "Founding PM for a voice receptionist that rolled out across 140+ radiology clinics. I owned it from the first messy calls to a containment-focused booking agent that held up against accents, interruptions, and the real way people book scans.",
-    metric: "containment rate · monthly call volume",
+    body: "Founding PM for a voice receptionist that rolled out across 140+ radiology clinics. I took it from the first ugly calls to a booking agent that holds containment against accents, interruptions, and the real way people book a scan.",
+    metric: "[X]% containment · [X] calls / month",
   },
   {
     project: "Accelevate",
-    body: "What I'm building now: AI voice and SMS for allied health clinics, psychology, OT, and physio. Missed-call text-back plus a receptionist that books, reschedules, and follows up, so a two-room practice gets front-desk coverage it could never afford to staff.",
-    metric: "clinics live · early results",
+    body: "What I am building now. Voice and SMS for allied health: psychology, OT, physio. Missed-call text-back plus a receptionist that books, reschedules, and follows up, so a two-room practice gets front-desk cover it could never afford to staff.",
+    metric: "[X] clinics live · early results",
   },
   {
     project: "Locum Motion",
-    body: "A marketplace matching GP locums to clinics, with the Accelevate receptionist stack underneath so cover requests and bookings handle themselves. Co-founded, currently in early sales.",
-    metric: "stage · traction",
+    body: "A marketplace matching GP locums to clinics, with the Accelevate stack underneath so cover requests book themselves. Co-founded, early sales.",
+    metric: "stage: early sales",
   },
 ];
 
@@ -65,10 +65,9 @@ const WORK: {
  * identity. Each line is a plain statement of what was actually done.
  */
 const PROOF: string[] = [
-  "Led AI receptionist work at HealthEngine, live in real GP clinics, not a pilot.",
-  "Built and shipped AI across voice, SMS, handoff, and operational tooling.",
-  "Worked across general practice, radiology, allied health, and clinical operations.",
-  "Brings a product and operator lens to AI systems: design, evaluation, and shipping, not just prototypes.",
+  "Built Helen at HealthEngine: an AI receptionist live in ~100 GP clinics, taking real patient calls.",
+  "Shipped across voice, SMS, and clean human handoff, through general practice, radiology, and allied health.",
+  "Owned the eval loop. Call review and version tracking are the boring discipline that decides when AI gets to answer unsupervised.",
 ];
 
 /**
@@ -79,27 +78,27 @@ const PROOF: string[] = [
 const CAPABILITIES: { title: string; body: string }[] = [
   {
     title: "Voice agents",
-    body: "Phone and SMS systems that answer, book, reschedule, and hand off to a human cleanly.",
+    body: "Phone and SMS that answer, book, reschedule, and hand to a human without dropping the thread.",
   },
   {
     title: "Workflow automation",
-    body: "Operational flows that absorb edge cases and interruptions instead of breaking on them.",
+    body: "Flows that absorb interruptions and missing fields instead of breaking on them.",
   },
   {
     title: "Internal tools",
-    body: "Admin and reviewer tooling so teams can see, trust, and steer what the AI is doing.",
+    body: "Reviewer and admin tooling so a team can see and steer what the AI is doing.",
   },
   {
     title: "Evaluation systems",
-    body: "Measuring quality honestly, with call review and version tracking, before trusting a model with more.",
+    body: "Honest quality measurement, call review and version tracking, before a model earns more rope.",
   },
   {
     title: "AI product strategy",
-    body: "Deciding what to build, what to automate, and when, with a clear path from prototype to production.",
+    body: "What to build, what to automate, and when, with a real path from prototype to production.",
   },
   {
     title: "Prototype to production",
-    body: "Taking AI from a working demo to a system that survives real, high-trust operations.",
+    body: "Taking a working demo to a system that holds up in live operations.",
   },
 ];
 
@@ -139,13 +138,9 @@ export default function SiteContent() {
         </h1>
 
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-          AI product operator and technical founder. I design, build, and ship
-          AI systems for complex, high-trust workflows.
-        </p>
-
-        <p className="mt-4 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-          Deep healthcare experience, now applied across industries where the
-          work is operational, regulated, and unforgiving.
+          Product operator and technical founder. Ten years building voice and
+          workflow AI in healthcare, where the edge cases are not edge cases.
+          They are the job.
         </p>
 
         <div className="mt-10">
@@ -153,7 +148,7 @@ export default function SiteContent() {
             href="#contact"
             className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--accent)] px-7 text-base font-medium text-[var(--accent-ink)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(.23,1,.32,1)] hover:bg-[var(--accent-strong)] hover:-translate-y-0.5"
           >
-            Discuss an AI workflow
+            Bring me a workflow
           </a>
         </div>
       </section>
@@ -175,9 +170,9 @@ export default function SiteContent() {
         </h2>
 
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-          Healthcare is where I learned to build AI for trust, edge cases, and
-          operational complexity. I now apply that same discipline to AI systems
-          across complex, high-trust workflows.
+          Healthcare taught me to build AI that survives the call going
+          sideways. A wrong booking is a missed scan, not a missed click, so you
+          design for the weird inputs first and the happy path second.
         </p>
 
         <ul className="mt-10 space-y-5">
@@ -269,8 +264,8 @@ export default function SiteContent() {
         </h2>
 
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-          AI systems for the messy middle, from strategy through to production.
-          Healthcare is the strongest example, not the boundary.
+          AI from strategy through production. Healthcare is where it is
+          sharpest; the same systems travel anywhere the work has to hold.
         </p>
 
         <div className="mt-12 grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2">
@@ -311,14 +306,12 @@ export default function SiteContent() {
         <div className="mt-12">
           <div className="py-8">
             <p className="text-xl font-medium leading-snug text-[var(--foreground)] sm:text-2xl">
-              Build for the model that&rsquo;s coming, not the one in front of
-              you.
+              Build for the model that&rsquo;s coming.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-              Capabilities move faster than roadmaps. I keep the hard parts in
-              the data, the workflow, and the trust, with model-agnostic
-              architecture underneath, so the model can be swapped for a better
-              one without a rewrite.
+              Capabilities outrun roadmaps. I keep the value in the data, the
+              workflow, and the eval, with model-agnostic plumbing underneath,
+              so a better model is a swap, not a rewrite.
             </p>
           </div>
 
@@ -327,23 +320,22 @@ export default function SiteContent() {
               Earn trust before you automate.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-              In high-trust workflows, a confident wrong answer is worse than no
-              answer. I ship assistance first, track prompts and versions,
-              review real calls and outputs, and only hand over control once
-              evaluation says it has earned the seat.
+              A confident wrong answer is worse than no answer. I ship
+              assistance first, track every prompt and version, review real
+              calls, and hand over control only when the eval says it has earned
+              the seat.
             </p>
           </div>
 
           <div className="border-t border-[var(--hairline)] py-8">
             <p className="text-xl font-medium leading-snug text-[var(--foreground)] sm:text-2xl">
-              Ship into the mess, not the demo.
+              Ship into the operations.
             </p>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-              Real operations have interruptions, accents, missing fields,
-              handoffs, and edge cases that never appear in a polished demo. I
-              design for admin, clinician, customer, and internal-user workflows
-              from day one, because that is the only place the work actually has
-              to hold.
+              Real work has interruptions, accents, missing fields, and handoffs
+              that never appear in a polished demo. I design for the admin, the
+              clinician, and the customer from day one, because that is the only
+              place it actually has to survive.
             </p>
           </div>
         </div>
@@ -369,14 +361,12 @@ export default function SiteContent() {
           <p className="text-lg leading-relaxed text-[var(--muted)]">
             I&rsquo;m building{" "}
             <span className="text-[var(--foreground)]">Accelevate</span>:
-            evaluation-first AI agents and workflow systems. The work is voice
-            AI, operational automation, and tooling for AI that can be reviewed,
-            trusted, and improved over time.
+            evaluation-first voice AI and workflow automation. Tooling for AI
+            that can be reviewed, corrected, and trusted to do more over time.
           </p>
           <p className="text-lg leading-relaxed text-[var(--muted)]">
-            Healthcare is the initial wedge, because it is complex, regulated,
-            and operationally unforgiving. The same systems generalise to any
-            workflow that has to hold under real conditions.
+            Healthcare is the wedge because it is unforgiving, and the systems
+            generalise to any workflow that has to hold under real conditions.
           </p>
         </div>
       </section>
@@ -396,12 +386,11 @@ export default function SiteContent() {
 
         <div className="mt-8 max-w-xl space-y-6">
           <p className="text-lg leading-relaxed text-[var(--muted)]">
-            I&rsquo;m an AI product operator and technical founder in Sydney,
-            around ten years across healthcare technology and production AI, with
-            a biomedical engineering background. I built Helen at HealthEngine,
-            was founding PM at Avoca, and now run Accelevate. I care about AI that
-            survives contact with real operations, not AI that looks good in a
-            demo.
+            I&rsquo;m a product operator and technical founder in Sydney.
+            Biomedical engineering background, about ten years across healthcare
+            tech and production AI. I built Helen at HealthEngine, was founding
+            PM at Avoca, and now run Accelevate. I care about AI that survives
+            contact with real operations. The demo-grade stuff bores me.
           </p>
           <p className="text-lg leading-relaxed text-[var(--muted)]">
             When I&rsquo;m not building, I&rsquo;m usually in the water or under
@@ -431,6 +420,28 @@ export default function SiteContent() {
 
       {/*
         ====================================================================
+        STUDIO  (the ahsonbuilds tie-in) - one confident line, kept distinct
+        from the AI services grid on purpose: folding "web development" into
+        the capabilities above would flatten specialist into generalist.
+        ====================================================================
+      */}
+      <section className="mx-auto w-full max-w-3xl px-6 py-24 sm:px-8 sm:py-32">
+        <p className="max-w-xl text-lg leading-relaxed text-[var(--muted)]">
+          This site is one of mine. I also build cinematic sites for venues
+          under <span className="text-[var(--foreground)]">ahsonbuilds</span>.
+        </p>
+        <div className="mt-8">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-1.5 text-base font-medium text-[var(--foreground)] underline-offset-4 transition-opacity duration-200 hover:opacity-70"
+          >
+            See the studio <span aria-hidden>&rarr;</span>
+          </a>
+        </div>
+      </section>
+
+      {/*
+        ====================================================================
         FUTURE SEAMS (~Twilight / Midnight, would slot ABOVE the deep zone):
           - LABS
           - WRITING
@@ -455,14 +466,13 @@ export default function SiteContent() {
         </h2>
 
         <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
-          If you are building an AI product, automating a complex workflow, or
-          trying to get AI from demo to production, I would like to hear about
-          it.
+          Building an AI product, automating a workflow, or trying to drag AI
+          from demo to production? I want to hear about it.
         </p>
 
         <div className="mt-10">
           <a
-            href="mailto:hello@ahsonkamal.com"
+            href="mailto:hello@ahson.com.au"
             className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-[var(--accent)] px-7 text-base font-medium text-[var(--accent-ink)] transition-[transform,background-color] duration-200 ease-[cubic-bezier(.23,1,.32,1)] hover:bg-[var(--accent-strong)] hover:-translate-y-0.5"
           >
             Talk to me about an AI product
