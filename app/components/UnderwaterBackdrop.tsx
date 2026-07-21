@@ -33,6 +33,7 @@ import {
   PARTICLE_MAX,
   SHAFTS_END,
 } from "@/app/lib/dive.config";
+import { fishDamp } from "@/app/lib/fishDamp";
 
 const clamp = (v: number, lo: number, hi: number) =>
   v < lo ? lo : v > hi ? hi : v;
@@ -160,10 +161,15 @@ export default function UnderwaterBackdrop() {
     };
 
     let last = performance.now();
+    // Eased particle-damping factor: follows the DepthFish signal so the mote
+    // field thins where fish drift through, easing in/out to avoid any pop.
+    let dampCur = 1;
     const tick = (now: number) => {
       if (disposed) return;
       const dt = Math.min(0.05, (now - last) / 1000); // clamp big gaps
       last = now;
+
+      dampCur += (fishDamp.value - dampCur) * Math.min(1, dt * 3);
 
       const { enter, upper } = depth.current;
       ctx.clearRect(0, 0, cssW, cssH);
@@ -171,7 +177,8 @@ export default function UnderwaterBackdrop() {
       // While in the dive (enter ~0) or tab hidden, don't draw - just idle.
       if (enter > 0.02 && !document.hidden) {
         // Denser/brighter near the surface; still a few faint motes in the deep.
-        const depthAlpha = (0.28 + 0.72 * upper) * enter;
+        // Thinned by dampCur wherever DepthFish is passing through a zone.
+        const depthAlpha = (0.28 + 0.72 * upper) * enter * dampCur;
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
           p.y += p.vy * dt;

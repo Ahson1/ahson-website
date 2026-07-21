@@ -521,3 +521,46 @@ html.has-custom-cursor * {
   bottom: 0;
   background: linear-gradient(to top, var(--depth-abyss), transparent);
 }
+
+/*
+  ----------------------------------------------------------------------------
+  DEPTH FISH - drifting background layer (app/components/DepthFish.tsx)
+  ----------------------------------------------------------------------------
+  A sparse set of painted fish that drift through the deep, BEHIND content and
+  ABOVE the UnderwaterBackdrop. Fixed full-viewport layer at a low z-index;
+  content rides at z-10 so it always stays clear. All motion is GSAP-driven
+  transform/opacity (drift, bob, parallax) - this stylesheet only owns the
+  static look and the reduced-motion kill switch. The art is desaturated,
+  dimmed, and feathered a hair so cutouts sink into the water without halos.
+*/
+.depthfish {
+  position: fixed;
+  inset: 0;
+  z-index: 1; /* above the backdrop (z-auto), below content (z-10) */
+  pointer-events: none;
+  overflow: hidden;
+}
+.df-fish {
+  position: absolute;
+  opacity: 0; /* GSAP fades each fish in on zone enter; SSR/no-JS stays clear */
+  will-change: transform, opacity;
+}
+.df-move {
+  will-change: transform;
+}
+.df-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* Sink the cutout into the deep + feather any edge so there is no halo. */
+  filter: saturate(0.82) brightness(0.9) blur(0.4px);
+}
+
+/* Reduced motion: no drifting layer at all. */
+@media (prefers-reduced-motion: reduce) {
+  .depthfish {
+    display: none;
+  }
+}

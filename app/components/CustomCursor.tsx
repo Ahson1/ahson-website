@@ -93,7 +93,10 @@ export default function CustomCursor() {
       cleanups.forEach((c) => c());
       document.documentElement.classList.remove("has-custom-cursor");
     };
-  }, []);
+    // Depend on `enabled`: the ring/dot only mount once it flips true, so the
+    // effect must re-run to find their refs and attach pointer tracking (on the
+    // first pass the elements are not in the DOM yet).
+  }, [enabled]);
 
   if (!enabled) return null;
 

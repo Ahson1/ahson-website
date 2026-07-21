@@ -1,3 +1,4 @@
+import DepthFish from "@/app/components/DepthFish";
 import DepthMarker from "@/app/components/DepthMarker";
 import ExperienceStrip from "@/app/components/ExperienceStrip";
 import FishWordmark from "@/app/components/FishWordmark";
@@ -120,6 +121,11 @@ export default function SiteContent() {
       {/* Living water: caustics, light shafts, particle drift + dither. Sits
           behind everything; intensity is tied to scroll depth. */}
       <UnderwaterBackdrop />
+
+      {/* Drifting depth-fish: one per zone, behind content + above the water.
+          Tied to the zone anchors below (#work, #how-i-build, #current-focus,
+          #contact); thins the particle field where it passes. */}
+      <DepthFish />
 
       {/* All page content rides ABOVE the water layers. */}
       <div className="relative z-10">
