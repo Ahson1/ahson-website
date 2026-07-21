@@ -1,33 +1,71 @@
+import CapabilityMorph from "@/app/components/CapabilityMorph";
+import Cta from "@/app/components/Cta";
 import CustomCursor from "@/app/components/CustomCursor";
-import DepthGauge from "@/app/components/DepthGauge";
 import DiveScrubber from "@/app/components/DiveScrubber";
+import Footer from "@/app/components/Footer";
+import Intersection from "@/app/components/Intersection";
 import Loader from "@/app/components/Loader";
-import SiteContent from "@/app/components/SiteContent";
+import LogoStrip from "@/app/components/LogoStrip";
+import ProofRow from "@/app/components/ProofRow";
+import SelectedWork from "@/app/components/SelectedWork";
 import SiteNav from "@/app/components/SiteNav";
 
 /**
- * Home
+ * Home - the Instrument redesign.
  * ----------------------------------------------------------------------------
- * Composition only. The cinematic dive (a self-contained client engine) opens
- * the page and dissolves onto the solid underwater blue; SiteContent picks up
- * on that same blue. The two are deliberately decoupled: the dive can later be
- * wrapped in site chrome without touching its scrub logic.
- *
- * The GSAP layer (loader wipe, custom cursor) rides on top as self-contained
- * client pieces, each with its own reduced-motion / pointer gating.
+ * The cinematic dive hero (untouched engine, new title card) opens the page
+ * and dissolves onto its deep-water blue; a short handoff band carries that
+ * blue down into the off-black instrument field the rest of the site lives
+ * on. Section order per the build brief:
+ *   hero -> logo strip -> proof -> intersection -> what-i-build (morph) ->
+ *   selected work -> CTA -> footer.
  */
 export default function Home() {
   return (
     <>
-      {/* Logo-wipe loader: holds while heavy assets preload, then reveals. */}
       <Loader />
-      {/* Site chrome: stays hidden through the dive, slides in past the hero. */}
       <SiteNav />
+
+      {/* 1. HERO - the existing dive scrub, with name / word-flip headline /
+             coordinates / scroll signifier on the title card. */}
       <DiveScrubber />
-      <SiteContent />
-      {/* Fixed instrumentation: tracks scroll depth across the whole page. */}
-      <DepthGauge />
-      {/* quickTo cursor + magnetic CTAs, gated behind (pointer: fine). */}
+
+      <main className="relative bg-[var(--bg)]">
+        {/* Seamless handoff: deep-water blue -> instrument off-black. */}
+        <div
+          aria-hidden="true"
+          className="h-[42vh]"
+          style={{
+            background:
+              "linear-gradient(to bottom, var(--underwater-blue), var(--bg))",
+          }}
+        />
+
+        {/* 2. LOGO STRIP - external proof, placed high. */}
+        <LogoStrip />
+
+        {/* 3. PROOF - odometer row. Particle moment #1 (subtle). */}
+        <ProofRow />
+
+        {/* 4. THE INTERSECTION - pinned isometric systems stack. */}
+        <Intersection />
+
+        {/* 6. SELECTED WORK - kept light; placed before the morph so the
+               morph's settle into the "ai" mark leads STRAIGHT into the CTA. */}
+        <SelectedWork />
+
+        {/* 5. WHAT I BUILD - particle moment #2 (signature): the emblem morph
+               that settles into the "ai" mark and leads into the CTA. */}
+        <CapabilityMorph />
+
+        {/* 7. CTA - the close. */}
+        <Cta />
+
+        {/* 8. FOOTER */}
+        <Footer />
+      </main>
+
+      {/* Cyan reticle cursor - desktop fine-pointer only. */}
       <CustomCursor />
     </>
   );

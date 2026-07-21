@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round">
+  <!-- PLACEHOLDER monoline glyph: RAG node-graph. Swap in place. -->
+  <circle cx="120" cy="120" r="16"/>
+  <circle cx="48"  cy="60"  r="11"/>
+  <circle cx="192" cy="52"  r="11"/>
+  <circle cx="204" cy="150" r="11"/>
+  <circle cx="60"  cy="186" r="11"/>
+  <circle cx="140" cy="34"  r="8"/>
+  <line x1="106" y1="110" x2="58"  y2="68"/>
+  <line x1="134" y1="110" x2="183" y2="60"/>
+  <line x1="135" y1="126" x2="193" y2="146"/>
+  <line x1="107" y1="129" x2="70"  y2="179"/>
+  <line x1="126" y1="105" x2="137" y2="42"/>
+</svg>

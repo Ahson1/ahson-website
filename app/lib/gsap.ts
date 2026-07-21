@@ -29,6 +29,9 @@ export function registerGsap(): void {
   CustomEase.create("flow", "M0,0 C0.16,1 0.3,1 1,1");
   // Quick lift with a touch of overshoot. Used for the loader mark and CTAs.
   CustomEase.create("snap", "M0,0 C0.34,1.4 0.5,1 1,1");
+  // MOTION DNA (redesign): functional production ease + one expressive flow.
+  CustomEase.create("prod", "0.4,0,0.2,1");
+  CustomEase.create("flowx", "0.33,0,0.2,1");
 
   registered = true;
 }

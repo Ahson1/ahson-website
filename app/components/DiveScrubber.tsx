@@ -20,6 +20,9 @@
  */
 
 import { useEffect, useRef, useState, type Ref } from "react";
+import ScrollCue from "@/app/components/ScrollCue";
+import WordFlip from "@/app/components/WordFlip";
+import { COORDS } from "@/app/lib/site.config";
 import {
   DPR_CAP,
   EYEBROW_LEAD_FRAMES,
@@ -60,7 +63,7 @@ function TitleCard({
   orientRef,
 }: {
   eyebrowRef?: Ref<HTMLParagraphElement>;
-  orientRef?: Ref<HTMLParagraphElement>;
+  orientRef?: Ref<HTMLDivElement>;
 } = {}) {
   return (
     <>
@@ -70,17 +73,24 @@ function TitleCard({
         className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/55 via-black/20 to-transparent"
       />
 
-      {/* TOP SPACE - one quiet orienting line anchors the upper-left; the sky
-          above and between it and the name reads as intentional negative space. */}
-      <p
+      {/* TOP SPACE - orientation + the real coordinate tag anchor the
+          upper-left; the sky between them and the name stays negative space. */}
+      <div
         ref={orientRef}
-        className="absolute left-8 top-8 text-[11px] font-medium uppercase tracking-[0.32em] text-white/55 sm:left-12 sm:top-12"
+        className="absolute left-8 top-8 sm:left-12 sm:top-12"
       >
-        Sydney Harbour
-      </p>
+        <p className="text-[11px] font-medium uppercase tracking-[0.32em] text-white/55">
+          Sydney Harbour
+        </p>
+        <p className="tel-label mt-2 !text-white/45 normal-case !tracking-[0.14em]">
+          {COORDS}
+        </p>
+      </div>
 
-      {/* NAME - the largest element on the card, over the calm lower water. */}
-      <div className="absolute bottom-0 left-0 p-8 sm:p-12">
+      {/* NAME + HEADLINE - the largest elements on the card, over the calm
+          lower water. Name in Clash Display; the headline carries the one
+          message with the kinetic domain word. */}
+      <div className="absolute bottom-0 left-0 max-w-[92vw] p-8 pb-24 sm:p-12 sm:pb-24">
         <p
           ref={eyebrowRef}
           className="text-xs font-medium uppercase tracking-[0.3em] text-[var(--accent)] sm:text-sm"
@@ -88,11 +98,21 @@ function TitleCard({
           AI Product Operator
         </p>
         <p
-          className="mt-3 font-semibold leading-[0.92] tracking-[-0.02em] text-white"
-          style={{ fontSize: "clamp(3rem, 8vw, 6.5rem)" }}
+          className="font-display mt-3 font-semibold leading-[0.92] tracking-[-0.02em] text-white"
+          style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
         >
           Ahson Kamal
         </p>
+        <p className="mt-5 max-w-xl text-base leading-snug text-white/80 sm:text-xl">
+          Complex technical systems, built end to end
+          <span className="text-white/50"> — across </span>
+          <WordFlip />
+        </p>
+      </div>
+
+      {/* SCROLL SIGNIFIER - bottom center, unmissable. */}
+      <div className="absolute inset-x-0 bottom-5 flex justify-center">
+        <ScrollCue />
       </div>
     </>
   );
@@ -104,7 +124,7 @@ export default function DiveScrubber() {
   const posterRef = useRef<HTMLImageElement>(null);
   const titleRef = useRef<HTMLDivElement>(null); // title group (sinks + fades)
   const eyebrowRef = useRef<HTMLParagraphElement>(null); // leads the name
-  const orientRef = useRef<HTMLParagraphElement>(null); // upper-left, leads most
+  const orientRef = useRef<HTMLDivElement>(null); // upper-left, leads most
   const markRef = useRef<HTMLDivElement>(null); // corner wordmark (fades in)
 
   // Loading + capability state drives what we render.

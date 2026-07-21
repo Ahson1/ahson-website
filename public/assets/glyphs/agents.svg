@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round">
+  <!-- PLACEHOLDER monoline glyph: agent loop / orbital (not a robot). Swap in place. -->
+  <ellipse cx="120" cy="120" rx="92" ry="34" transform="rotate(-24 120 120)"/>
+  <ellipse cx="120" cy="120" rx="92" ry="34" transform="rotate(24 120 120)"/>
+  <circle cx="120" cy="120" r="13"/>
+  <circle cx="203" cy="86" r="7"/>
+  <circle cx="38" cy="156" r="7"/>
+</svg>

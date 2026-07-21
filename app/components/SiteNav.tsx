@@ -20,11 +20,12 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/** Section links, in page order. `cta` gets the amber treatment. */
+/** Section links, in page order. `cta` gets the accent treatment. */
 const LINKS: { label: string; href: string; cta?: boolean; hideSm?: boolean }[] =
   [
+    { label: "Proof", href: "#proof", hideSm: true },
+    { label: "Systems", href: "#intersection" },
     { label: "Work", href: "#work" },
-    { label: "Approach", href: "#how-i-build", hideSm: true },
     { label: "Contact", href: "#contact", cta: true },
   ];
 
@@ -78,12 +79,12 @@ export default function SiteNav() {
     >
       {/* Faint blur + hairline so the bar separates from content without a hard
           fill. The gradient keeps the left/right edges legible over any frame. */}
-      <div className="border-b border-[var(--hairline)] bg-[color-mix(in_oklab,var(--underwater-blue)_72%,transparent)] backdrop-blur-md backdrop-saturate-150">
-        <nav className="mx-auto flex h-14 w-full max-w-3xl items-center justify-between px-6 sm:h-16 sm:px-8">
+      <div className="border-b border-[var(--hairline)] bg-[color-mix(in_oklab,var(--bg)_78%,transparent)] backdrop-blur-md">
+        <nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-6 sm:h-16 sm:px-8">
           {/* Wordmark -> back to the top of the dive. */}
           <a
             href="#top"
-            className="text-sm font-medium tracking-tight text-[var(--foreground)] transition-opacity duration-200 hover:opacity-70"
+            className="text-sm font-medium tracking-tight text-[var(--fg)] transition-opacity duration-200 hover:opacity-70"
           >
             Ahson Kamal
           </a>
@@ -97,8 +98,8 @@ export default function SiteNav() {
                   "text-sm transition-colors duration-200 " +
                   (l.hideSm ? "hidden sm:inline " : "") +
                   (l.cta
-                    ? "text-[var(--accent)] hover:text-[var(--accent-strong)]"
-                    : "text-[var(--muted)] hover:text-[var(--foreground)]")
+                    ? "text-[var(--accent)] hover:opacity-80"
+                    : "text-[var(--muted)] hover:text-[var(--fg)]")
                 }
               >
                 {l.label}

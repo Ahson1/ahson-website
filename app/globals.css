@@ -2,86 +2,90 @@
 
 /*
   ----------------------------------------------------------------------------
-  UNDERWATER WORLD - color system
+  INSTRUMENT - color + type system (redesign)
   ----------------------------------------------------------------------------
-  THE ONE KNOB: --underwater-blue
-  Sampled from the dive clip's final frame (bottom-center deep water).
-  The whole palette is mixed toward this hue (oklab), and the dive canvas
-  fades out onto this exact color for a seamless handoff. Swap this single
-  value to retint the entire site + the handoff.
+  Register: precise instrument, not a showreel. Off-black field, off-white
+  text, hairline rules, ONE cyan accent used only on live/active elements.
+
+  PLACEHOLDER CONTRACT SLOT 1: --accent. Swap the hex below for the exact
+  value sampled from the real "ai" logo. Everything cyan derives from it.
 */
 :root {
+  --bg: #0b0b0d; /* off-black field - never pure black */
+  --fg: #ededea; /* off-white text */
+  --hairline: #23242a; /* thin rules, tick marks, panel frames */
+  --muted: #97979d; /* secondary text, >=4.5:1 on --bg */
+  --faint: #55565e; /* tertiary labels / inactive telemetry */
+
+  --accent: #35c9ff; /* PLACEHOLDER: exact hex from the "ai" logo */
+  --accent-dim: color-mix(in oklab, var(--accent) 45%, transparent);
+  --accent-ink: #062330; /* text sitting on an accent fill */
+
+  /* The dive engine dissolves onto this exact blue; the handoff band below the
+     hero then carries it down into --bg. Keep in sync with the clip. */
   --underwater-blue: #0a2c44;
 
-  /* Palette tinted toward the blue so the page reads as one continuous world. */
-  --ink: color-mix(in oklab, #04070b 80%, var(--underwater-blue) 20%); /* deepest backdrop / overscroll */
-  --background: var(--underwater-blue);
-  --foreground: #eaf2f8; /* near-white, only barely cool, so body copy is not tinted */
-  --muted: color-mix(in oklab, var(--foreground) 64%, var(--underwater-blue)); /* secondary text, stays >= 4.5:1 */
-  --hairline: color-mix(in oklab, var(--foreground) 14%, transparent);
-
-  /*
-    DEPTH DESCENT - the page sinks as you scroll. These are derived from the one
-    knob (--underwater-blue -> --ink) so retinting stays automatic. Mapped to
-    real scroll distance in px on <main>, not to section count, so depth is
-    felt, not announced. Loose ocean-zone framing: sunlight near the handoff,
-    abyss far below.
-  */
-  --depth-sunlight: var(--underwater-blue);
-  --depth-twilight: color-mix(in oklab, var(--underwater-blue) 58%, var(--ink));
-  --depth-midnight: color-mix(in oklab, var(--underwater-blue) 22%, var(--ink));
-  --depth-abyss: color-mix(in oklab, var(--ink) 78%, #000000);
-
-  /* One accent, locked: the remembered golden-hour sun from the start of the dive. */
-  --accent: #f4c277;
-  --accent-strong: color-mix(in oklab, var(--accent) 86%, #ffffff);
-  --accent-ink: #06202f; /* text that sits on an accent fill */
-
-  /* Motion */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --dur: 240ms;
+  /* MOTION DNA - functional + one expressive flow. */
+  --ease-prod: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-flow: cubic-bezier(0.33, 0, 0.2, 1);
+  --dur-fast: 200ms;
+  --dur-mid: 320ms;
+  --dur-slow: 450ms;
+  --dur-expressive: 750ms;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-ink: var(--ink);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-general-sans);
+  --font-display: var(--font-clash-display);
   --font-mono: var(--font-geist-mono);
 }
 
 html {
-  background: var(--ink);
-  /* Smooth anchor jumps from the nav (neutralized under reduced motion below). */
+  background: var(--bg);
   scroll-behavior: smooth;
 }
 
-/* Anchored sections clear the fixed nav so headings aren't tucked under it. */
 section[id] {
   scroll-margin-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-general-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* Real focus-visible states, accent ring. */
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-clash-display), var(--font-general-sans), system-ui,
+    sans-serif;
+  text-wrap: balance;
+}
+
+.font-mono-num {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
-/*
-  Reduced motion: neutralize incidental transitions/animations. The dive engine
-  reads this query directly and serves a static end-frame instead of scrubbing.
-*/
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -95,316 +99,267 @@ body {
 
 /*
   ----------------------------------------------------------------------------
-  UNDERWATER BACKDROP - living-water motion
+  TELEMETRY FRAMING - corner brackets + tick-mark rules
   ----------------------------------------------------------------------------
-  Used by app/components/UnderwaterBackdrop.tsx. All animation is transform-only
-  (GPU-cheap) and gated by depth + reduced-motion in the component, so the
-  scroll scrub stays smooth. Two caustic layers drift against each other to
-  shimmer; the shafts sway gently from the surface.
+  .frame draws four corner brackets on any relatively-positioned panel via a
+  single ::before/::after pair (two corners each). .ticks is a hairline with
+  small tick marks - use as a section rule.
 */
-@keyframes caustics-drift-a {
-  0% {
-    transform: translate3d(-4%, -3%, 0) scale(1.12);
-  }
-  50% {
-    transform: translate3d(3%, 2%, 0) scale(1.2);
-  }
-  100% {
-    transform: translate3d(-4%, -3%, 0) scale(1.12);
+.frame {
+  position: relative;
+}
+.frame::before,
+.frame::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.frame::before {
+  top: 0;
+  left: 0;
+  border-top: 1px solid var(--faint);
+  border-left: 1px solid var(--faint);
+}
+.frame::after {
+  bottom: 0;
+  right: 0;
+  border-bottom: 1px solid var(--faint);
+  border-right: 1px solid var(--faint);
+}
+/* Opposite pair rides on child spans (CornerFrame renders them). */
+.frame-tr,
+.frame-bl {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+.frame-tr {
+  top: 0;
+  right: 0;
+  border-top: 1px solid var(--faint);
+  border-right: 1px solid var(--faint);
+}
+.frame-bl {
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid var(--faint);
+  border-left: 1px solid var(--faint);
+}
+/* Active frames warm to the accent (used sparingly - live panels only). */
+.frame.is-live::before,
+.frame.is-live::after,
+.frame.is-live .frame-tr,
+.frame.is-live .frame-bl {
+  border-color: var(--accent-dim);
+}
+
+/* Hairline rule with tick marks every 80px. */
+.ticks {
+  height: 5px;
+  background-image: linear-gradient(var(--hairline), var(--hairline)),
+    repeating-linear-gradient(
+      to right,
+      var(--hairline) 0 1px,
+      transparent 1px 80px
+    );
+  background-size:
+    100% 1px,
+    100% 5px;
+  background-position:
+    0 100%,
+    0 0;
+  background-repeat: no-repeat, repeat-x;
+}
+
+/* Small telemetry label: mono, tracked-out, faint. */
+.tel-label {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/*
+  ----------------------------------------------------------------------------
+  HERO ADDITIONS - word flip + scroll signifier
+  ----------------------------------------------------------------------------
+*/
+.wordflip {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+  color: var(--accent);
+}
+.wordflip > span {
+  grid-area: 1 / 1;
+  will-change: transform, opacity;
+}
+
+/* SCROLL cue: obvious to a non-technical viewer. Word + a line the arrow
+   travels down. The travel animation is transform-only. */
+.scrollcue-track {
+  position: relative;
+  width: 1px;
+  height: 44px;
+  background: color-mix(in oklab, #ffffff 28%, transparent);
+  overflow: hidden;
+}
+.scrollcue-arrow {
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  margin-left: -5px;
+  color: var(--accent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .scrollcue-arrow {
+    animation: cue-travel 1.7s var(--ease-prod) infinite;
   }
 }
-@keyframes caustics-drift-b {
+@keyframes cue-travel {
   0% {
-    transform: translate3d(3%, 2%, 0) scale(1.22);
+    transform: translateY(0);
+    opacity: 0;
   }
-  50% {
-    transform: translate3d(-3%, -2%, 0) scale(1.12);
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
   }
   100% {
-    transform: translate3d(3%, 2%, 0) scale(1.22);
-  }
-}
-@keyframes shafts-drift {
-  0% {
-    transform: translate3d(-3%, 0, 0) skewX(-9deg);
-  }
-  50% {
-    transform: translate3d(4%, 0, 0) skewX(-11deg);
-  }
-  100% {
-    transform: translate3d(-3%, 0, 0) skewX(-9deg);
+    transform: translateY(52px);
+    opacity: 0;
   }
 }
 
 /*
   ----------------------------------------------------------------------------
-  EXPERIENCE STRIP - quiet wordmark row (app/components/ExperienceStrip.tsx)
+  LOGO STRIP - slow marquee + hover fact line
   ----------------------------------------------------------------------------
-  Motion grounded in Emil Kowalski's curves and timings:
-   - Reveal: transform + opacity TOGETHER (nothing appears from nothing), a
-     strong custom ease-out, short 70ms stagger. Entrances use ease-out.
-   - Hover: opacity only, `ease`, 180ms (his rule for hover/colour changes),
-     gated behind a hover-capable pointer so touch taps do not false-trigger.
-   - Parallax: a subtle scroll-LINKED drift via a CSS view() timeline - linear
-     (constant motion), off the main thread, and NO scroll listener.
-  The reveal (outer wrapper) and the resting dim + hover (inner mark) are split
-  onto two elements so they never fight over the same opacity. All movement is
-  gated by prefers-reduced-motion; only the comprehension-aiding opacity stays.
+  Two copies of the row translate -50%; pauses on hover so the fact line can
+  be read. Gated by reduced motion (static wrapped row instead).
 */
-
-/* Resting tier + hover lift live on the inner mark. */
-.xp-mark {
-  opacity: 0.55;
-  transition: opacity 180ms ease;
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
 }
-@media (hover: hover) and (pointer: fine) {
-  .xp-mark:hover {
-    opacity: 1;
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .marquee-track {
+    animation: marquee-scroll 46s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
   }
 }
-
-/* Reveal lives on the outer wrapper. The hidden start state is applied only
-   once JS arms the row, so SSR / no-JS still renders the marks visible. */
-.xp-reveal {
-  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
-.xp-row.is-armed .xp-reveal {
+.logo-cell img {
+  opacity: 0.55;
+  filter: grayscale(1);
+  transition: opacity var(--dur-fast) var(--ease-prod);
+}
+.logo-cell:hover img,
+.logo-cell:focus-visible img {
+  opacity: 1;
+}
+.logo-fact {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(4px);
+  transition:
+    opacity var(--dur-fast) var(--ease-prod),
+    transform var(--dur-fast) var(--ease-prod);
 }
-.xp-row.is-armed.is-revealed .xp-reveal {
+.logo-cell:hover .logo-fact,
+.logo-cell:focus-visible .logo-fact {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: calc(var(--i, 0) * 70ms);
-}
-
-/* Subtle parallax: the row drifts a few px as it crosses the viewport. Linear,
-   progressive-enhancement only, never under reduced motion. Browsers without
-   scroll-driven animations simply get a still row. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .xp-row {
-      animation: xp-parallax linear both;
-      animation-timeline: view();
-      animation-range: entry 0% exit 100%;
-    }
-  }
-}
-@keyframes xp-parallax {
-  from {
-    transform: translateX(11px);
-  }
-  to {
-    transform: translateX(-11px);
-  }
 }
 
 /*
   ----------------------------------------------------------------------------
-  SEA GALLERY - horizontal scroll-snap row (app/components/SeaGallery.tsx)
+  ODOMETER - rolling mono digits (ProofRow)
   ----------------------------------------------------------------------------
-  Imagery carries this beat, so the chrome is almost nothing: a grab cursor, a
-  peek of the next card, a single caption that crossfades, and one thin amber
-  progress line. Motion (caption fade, depth parallax) is Emil-tuned and gone
-  under reduced motion.
+  Each digit is a masked 1em-tall window over a 0-9 strip; GSAP translates the
+  strip to the target digit. Non-digit characters render static.
 */
-
-/* The scroller. Scrollbar hidden (the peek + progress line are the affordance);
-   grab cursor signals draggability without arrows. */
-.gal-track {
-  scrollbar-width: none;
-  cursor: grab;
-  scroll-padding-inline: 1.5rem;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
+.odo {
+  display: inline-flex;
+  overflow: hidden;
+  height: 1em;
+  line-height: 1;
 }
-.gal-track::-webkit-scrollbar {
-  display: none;
+.odo-digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
 }
-.gal-track:active {
-  cursor: grabbing;
+.odo-strip {
+  display: block;
+  will-change: transform;
 }
-
-/* Deep-water placeholder behind each tile: a loading or missing clip still
-   reads as intentional water. Keyed to the depth descent + the one blue knob. */
-.gal-placeholder {
-  background:
-    radial-gradient(
-      120% 90% at 30% 20%,
-      color-mix(in oklab, var(--depth-twilight) 80%, #ffffff 4%),
-      var(--depth-midnight) 70%,
-      var(--depth-abyss)
-    );
-}
-
-/* The caption crossfades when a new card snaps in: transform + opacity TOGETHER
-   on a strong ease-out (Emil). The `key` swap in React retriggers it. */
-.gal-cap {
-  animation: gal-cap-in 360ms var(--ease-out) both;
-}
-@keyframes gal-cap-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Progress line: scaled from a 0..1 var the component feeds from the row's own
-   scrollLeft. Width is constant; we scale on X from the left. */
-.gal-progress {
-  transform: scaleX(var(--gal-progress, 0));
-  transform-origin: left center;
-  transition: transform 90ms linear;
-}
-
-/* Subtle depth parallax as the row passes the viewport. Off-main-thread CSS
-   view() timeline (linear, constant motion). Vertical only, so it never fights
-   the horizontal scroll. Degrades to a still row where unsupported. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .gal-parallax {
-      animation: gal-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% exit 100%;
-      will-change: transform;
-    }
-  }
-}
-@keyframes gal-rise {
-  from {
-    transform: translateY(26px);
-  }
-  to {
-    transform: translateY(-26px);
-  }
+.odo-strip > span {
+  display: block;
+  height: 1em;
 }
 
 /*
   ----------------------------------------------------------------------------
-  THE TURN - ocean -> cosmos payoff (app/components/TheTurn.tsx)
+  INTERSECTION - isometric systems stack
   ----------------------------------------------------------------------------
-  A full-bleed night sky built in layers: base sky -> galaxy band -> two star
-  fields -> the real Milky Way photo on top -> a top-edge handoff from the deep
-  water. The starfield is the BASE, so the moment lands even with no photo.
-  Only opacity/transform animate; everything stills under reduced motion.
+  SVG plates; the active layer strokes cyan with a soft glow. Transitions are
+  stroke/fill/opacity only.
 */
-.turn-sky {
-  background:
-    radial-gradient(
-      130% 90% at 50% 118%,
-      color-mix(in oklab, var(--ink) 70%, #122046) 0%,
-      color-mix(in oklab, var(--ink) 86%, #0a1430) 42%,
-      #02030a 100%
-    );
+.iso-plate {
+  stroke: var(--hairline);
+  fill: color-mix(in oklab, var(--fg) 3%, transparent);
+  transition:
+    stroke var(--dur-mid) var(--ease-prod),
+    fill var(--dur-mid) var(--ease-prod),
+    opacity var(--dur-mid) var(--ease-prod);
+  opacity: 0.85;
 }
-
-/* A soft, blurred diagonal galaxy band - just enough to feel like the Milky Way
-   even before the photo is dropped in. */
-.turn-band {
-  background: linear-gradient(
-    118deg,
-    transparent 36%,
-    rgba(170, 190, 255, 0.05) 47%,
-    rgba(214, 224, 255, 0.1) 50%,
-    rgba(170, 190, 255, 0.05) 53%,
-    transparent 64%
-  );
-  filter: blur(7px);
+.iso-layer.is-active .iso-plate {
+  stroke: var(--accent);
+  fill: color-mix(in oklab, var(--accent) 10%, transparent);
+  opacity: 1;
+  filter: drop-shadow(0 0 6px var(--accent-dim));
 }
-
-/* Two tiling star layers. Percent-positioned dots inside a repeating tile give
-   a scattered field cheaply (no thousand-entry box-shadow). */
-.turn-stars {
-  background-repeat: repeat;
+.iso-tag {
+  fill: var(--faint);
+  transition: fill var(--dur-mid) var(--ease-prod);
 }
-.turn-stars-back {
-  background-image:
-    radial-gradient(1px 1px at 18% 22%, rgba(255, 255, 255, 0.65), transparent),
-    radial-gradient(1px 1px at 62% 12%, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 83% 44%, rgba(255, 255, 255, 0.6), transparent),
-    radial-gradient(1px 1px at 35% 68%, rgba(255, 255, 255, 0.45), transparent),
-    radial-gradient(1px 1px at 52% 88%, rgba(255, 255, 255, 0.55), transparent);
-  background-size: 360px 360px;
-  opacity: 0.7;
-}
-.turn-stars-front {
-  background-image:
-    radial-gradient(1.6px 1.6px at 28% 34%, rgba(255, 255, 255, 0.95), transparent),
-    radial-gradient(1.4px 1.4px at 72% 58%, rgba(245, 248, 255, 0.85), transparent),
-    radial-gradient(1.3px 1.3px at 12% 76%, rgba(255, 255, 255, 0.8), transparent),
-    radial-gradient(1.5px 1.5px at 88% 20%, rgba(235, 242, 255, 0.9), transparent);
-  background-size: 520px 520px;
-}
-
-/* The real photo, covering the field once present. A missing file just leaves
-   this transparent and the starfield shows through. */
-.turn-photo {
-  background-size: cover;
-  background-position: center 35%;
-  background-repeat: no-repeat;
-  /* Held back a touch so foreground copy stays legible over bright cores. */
-  opacity: 0.92;
-}
-
-/* Top edge: the deep water bottoming out into night. Uses the same --depth-abyss
-   the descent ends on, so the gallery above dissolves straight into the sky. */
-.turn-handoff {
-  height: 34vh;
-  background: linear-gradient(
-    to bottom,
-    var(--depth-abyss) 0%,
-    color-mix(in oklab, var(--depth-abyss) 50%, transparent) 46%,
-    transparent 100%
-  );
-}
-
-/* Slow twinkle on the back layer + a gentle photo drift. Opacity/transform only;
-   both removed under reduced motion. */
-@media (prefers-reduced-motion: no-preference) {
-  .turn-stars-back {
-    animation: turn-twinkle 7s ease-in-out infinite;
-  }
-  @supports (animation-timeline: view()) {
-    .turn-photo {
-      animation: turn-drift linear both;
-      animation-timeline: view();
-      animation-range: entry 0% exit 100%;
-      will-change: transform;
-    }
-  }
-}
-@keyframes turn-twinkle {
-  0%,
-  100% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 0.85;
-  }
-}
-@keyframes turn-drift {
-  from {
-    transform: scale(1.06) translateY(1.5%);
-  }
-  to {
-    transform: scale(1.06) translateY(-1.5%);
-  }
+.iso-layer.is-active .iso-tag {
+  fill: var(--accent);
 }
 
 /*
   ----------------------------------------------------------------------------
-  GSAP MOTION LAYER (ScrollTrigger only - no global ScrollSmoother)
-  Loader wipe, custom cursor, and the masked fish wordmark. All transform/opacity
-  only; every piece has a reduced-motion path in its component.
+  LOADER - logo wipe (kept from v1; retinted to the instrument field)
   ----------------------------------------------------------------------------
 */
-
-/* Loader: full-bleed off-black tinted to the page hue, above everything. The
-   background matches the mark's own field (rgb 10 14 18) so no box edge shows. */
 .loader {
   position: fixed;
   inset: 0;
@@ -424,143 +379,109 @@ body {
   display: block;
 }
 
-/* Custom cursor: a trailing ring + a tight dot. Centered on the point via
-   negative margins so GSAP x/y (transforms) position the center. */
+/*
+  ----------------------------------------------------------------------------
+  CUSTOM CURSOR - cyan crosshair reticle (desktop / fine pointers only)
+  ----------------------------------------------------------------------------
+  A bracketed reticle trails the pointer and snaps to interactive elements
+  (scaling to their bounds); a tight dot marks the true point. Positioning is
+  transform-only via GSAP quickTo. Touch devices never mount this.
+*/
 html.has-custom-cursor,
 html.has-custom-cursor * {
   cursor: none !important;
 }
-.cursor-ring,
+.cursor-reticle,
 .cursor-dot {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 90;
   pointer-events: none;
-  border-radius: 999px;
   will-change: transform;
 }
-.cursor-ring {
+.cursor-reticle {
   width: 34px;
   height: 34px;
   margin: -17px 0 0 -17px;
-  border: 1.5px solid color-mix(in oklab, var(--accent) 80%, transparent);
+  /* Four corner brackets, drawn with 8 gradient strips. */
+  --b: color-mix(in oklab, var(--accent) 85%, transparent);
+  background-image: linear-gradient(var(--b), var(--b)),
+    linear-gradient(var(--b), var(--b)), linear-gradient(var(--b), var(--b)),
+    linear-gradient(var(--b), var(--b)), linear-gradient(var(--b), var(--b)),
+    linear-gradient(var(--b), var(--b)), linear-gradient(var(--b), var(--b)),
+    linear-gradient(var(--b), var(--b));
+  background-repeat: no-repeat;
+  background-size:
+    9px 1.5px,
+    1.5px 9px,
+    9px 1.5px,
+    1.5px 9px,
+    9px 1.5px,
+    1.5px 9px,
+    9px 1.5px,
+    1.5px 9px;
+  background-position:
+    left top,
+    left top,
+    right top,
+    right top,
+    left bottom,
+    left bottom,
+    right bottom,
+    right bottom;
 }
 .cursor-dot {
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
   background: var(--accent);
-}
-
-/* Masked fish wordmark band. */
-.fish-band {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: clamp(260px, 44vh, 440px);
-  overflow: hidden;
-  background: var(--depth-midnight);
-  color: var(--depth-midnight); /* drives the SVG panel fill via currentColor */
-  isolation: isolate;
-}
-.fish-media {
-  position: absolute;
-  inset: -14% 0; /* oversize vertically so the parallax drift never gaps */
-  z-index: 0;
-  will-change: transform;
-}
-.fish-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.fish-mask {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-.fish-word {
-  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
-  font-weight: 800;
-  font-size: 230px;
-  letter-spacing: 6px;
-}
-.fish-vignette {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: radial-gradient(
-    120% 92% at 50% 50%,
-    transparent 44%,
-    color-mix(in oklab, var(--depth-abyss) 72%, transparent) 100%
-  );
-}
-/* Soften the hard top/bottom edges into the surrounding depth gradient. */
-.fish-band::before,
-.fish-band::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 20%;
-  z-index: 2;
-  pointer-events: none;
-}
-.fish-band::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--depth-twilight), transparent);
-}
-.fish-band::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--depth-abyss), transparent);
+  border-radius: 999px;
 }
 
 /*
   ----------------------------------------------------------------------------
-  DEPTH FISH - drifting background layer (app/components/DepthFish.tsx)
+  BUTTONS - the one accent CTA + quiet secondary
   ----------------------------------------------------------------------------
-  A sparse set of painted fish that drift through the deep, BEHIND content and
-  ABOVE the UnderwaterBackdrop. Fixed full-viewport layer at a low z-index;
-  content rides at z-10 so it always stays clear. All motion is GSAP-driven
-  transform/opacity (drift, bob, parallax) - this stylesheet only owns the
-  static look and the reduced-motion kill switch. The art is desaturated,
-  dimmed, and feathered a hair so cutouts sink into the water without halos.
 */
-.depthfish {
-  position: fixed;
-  inset: 0;
-  z-index: 1; /* above the backdrop (z-auto), below content (z-10) */
-  pointer-events: none;
-  overflow: hidden;
+.btn-accent {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 1.65rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 500;
+  transition:
+    transform var(--dur-fast) var(--ease-prod),
+    background-color var(--dur-fast) var(--ease-prod);
 }
-.df-fish {
-  position: absolute;
-  opacity: 0; /* GSAP fades each fish in on zone enter; SSR/no-JS stays clear */
-  will-change: transform, opacity;
+.btn-accent:hover {
+  background: color-mix(in oklab, var(--accent) 84%, #ffffff);
+  transform: translateY(-2px);
 }
-.df-move {
-  will-change: transform;
+.btn-accent:active {
+  transform: scale(0.97);
 }
-.df-art {
-  display: block;
-  width: 100%;
-  height: auto;
-  user-select: none;
-  -webkit-user-drag: none;
-  /* Sink the cutout into the deep + feather any edge so there is no halo. */
-  filter: saturate(0.82) brightness(0.9) blur(0.4px);
+.btn-quiet {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+  border: 1px solid var(--hairline);
+  color: var(--fg);
+  font-weight: 500;
+  transition:
+    border-color var(--dur-fast) var(--ease-prod),
+    color var(--dur-fast) var(--ease-prod);
 }
-
-/* Reduced motion: no drifting layer at all. */
-@media (prefers-reduced-motion: reduce) {
-  .depthfish {
-    display: none;
-  }
+.btn-quiet:hover {
+  border-color: var(--faint);
+}
+.btn-quiet:active {
+  transform: scale(0.97);
 }
