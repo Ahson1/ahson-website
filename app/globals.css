@@ -39,8 +39,8 @@
   --color-foreground: var(--fg);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --font-sans: var(--font-general-sans);
-  --font-display: var(--font-clash-display);
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -56,17 +56,18 @@ section[id] {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-general-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+/* One designed system: headlines share the body family (Geist), differentiated
+   by weight and tracking, not by a second face. */
 h1,
 h2,
 h3,
 .font-display {
-  font-family: var(--font-clash-display), var(--font-general-sans), system-ui,
-    sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   text-wrap: balance;
 }
 
@@ -185,20 +186,9 @@ h3,
 
 /*
   ----------------------------------------------------------------------------
-  HERO ADDITIONS - word flip + scroll signifier
+  HERO ADDITIONS - scroll signifier
   ----------------------------------------------------------------------------
 */
-.wordflip {
-  display: inline-grid;
-  overflow: hidden;
-  vertical-align: bottom;
-  color: var(--accent);
-}
-.wordflip > span {
-  grid-area: 1 / 1;
-  will-change: transform, opacity;
-}
-
 /* SCROLL cue: obvious to a non-technical viewer. Word + a line the arrow
    travels down. The travel animation is transform-only. */
 .scrollcue-track {
@@ -353,6 +343,29 @@ h3,
 }
 .iso-layer.is-active .iso-tag {
   fill: var(--accent);
+}
+/* Own-work artifact on each plate: faint at rest, crisp + cyan-lit when the
+   layer is active. Opacity/filter only - cheap to transition. */
+.iso-artifact {
+  opacity: 0.14;
+  transition: opacity var(--dur-mid) var(--ease-prod),
+    filter var(--dur-mid) var(--ease-prod);
+}
+.iso-layer.is-active .iso-artifact {
+  opacity: 0.6;
+  filter: drop-shadow(0 0 4px var(--accent-dim));
+}
+
+/* MOBILE INTERSECTION - vertical scroll-snap through the four layers. Snap
+   lives on the root scroller (proximity, so the rest of the page scrolls
+   normally) and only the layer blocks declare an alignment. */
+@media (max-width: 1023px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+  .snap-layer {
+    scroll-snap-align: center;
+  }
 }
 
 /*

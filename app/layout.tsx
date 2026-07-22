@@ -1,22 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
-import { Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-/* Self-hosted Fontshare variables: Clash Display = headlines, General Sans =
-   body. Mono numerals (stats, telemetry labels) ride on Geist Mono. */
-const clashDisplay = localFont({
-  src: "./fonts/ClashDisplay-Variable.woff2",
-  variable: "--font-clash-display",
-  weight: "200 700",
-  display: "swap",
-});
-
-const generalSans = localFont({
-  src: "./fonts/GeneralSans-Variable.woff2",
-  variable: "--font-general-sans",
-  weight: "200 700",
-  display: "swap",
+/* One designed system: Geist carries headlines, body and UI; Geist Mono carries
+   stat numerals and telemetry labels. next/font self-hosts the variable woff2
+   at build time, subsets to latin, preloads it, and injects a size-matched
+   fallback (no layout shift). display: swap is the default. */
+const geist = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
@@ -25,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ahson Kamal — Complex technical systems, built end to end",
+  title: "Ahson Kamal | Complex technical systems, built end to end",
   description:
-    "Sydney. I build complex, high-confidence technical systems end to end — across product, engineering, AI, and go-to-market.",
+    "Sydney. Product leader and technical founder. Ten years building voice and workflow AI in healthcare, where the edge cases are the job.",
 };
 
 // Browser chrome sits on the instrument off-black.
@@ -44,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${clashDisplay.variable} ${generalSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

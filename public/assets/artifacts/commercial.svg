@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+  <!-- PLACEHOLDER own-work artifact (layer 03 Commercial): swap with MY OWN
+       pricing/economics model sketch. Own work only - no employer-internal
+       numbers, no client data. -->
+  <path d="M12 96 H208 M12 96 V10" stroke-width="1"/>
+  <path d="M12 88 C60 84 110 62 150 40 S196 18 206 14"/>
+  <path d="M12 74 C70 72 130 66 206 58" stroke-dasharray="4 4" stroke-width="1.2"/>
+  <circle cx="150" cy="40" r="4"/>
+  <path d="M150 40 V96" stroke-dasharray="2 4" stroke-width="1"/>
+  <rect x="24" y="20" width="42" height="18" rx="2" stroke-width="1"/>
+  <path d="M30 27 h18 M30 33 h26" stroke-width="1"/>
+</svg>

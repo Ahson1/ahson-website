@@ -27,7 +27,7 @@ export default function Cta() {
         </h2>
         <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-[var(--muted)]">
           This site is one of mine. I design and build cinematic, precise sites
-          under ahson.studio — and AI systems that hold up in production.
+          under ahson.studio, and AI systems that hold up in production.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a href={STUDIO_URL} data-magnetic className="btn-accent">

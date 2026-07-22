@@ -21,8 +21,7 @@
 
 import { useEffect, useRef, useState, type Ref } from "react";
 import ScrollCue from "@/app/components/ScrollCue";
-import WordFlip from "@/app/components/WordFlip";
-import { COORDS } from "@/app/lib/site.config";
+import { COORDS, HERO_HEADLINE, HERO_SUBLINE } from "@/app/lib/site.config";
 import {
   DPR_CAP,
   EYEBROW_LEAD_FRAMES,
@@ -88,25 +87,23 @@ function TitleCard({
       </div>
 
       {/* NAME + HEADLINE - the largest elements on the card, over the calm
-          lower water. Name in Clash Display; the headline carries the one
-          message with the kinetic domain word. */}
+          lower water. The headline is STATIC (no word-flip); the subline
+          carries the positioning. */}
       <div className="absolute bottom-0 left-0 max-w-[92vw] p-8 pb-24 sm:p-12 sm:pb-24">
         <p
           ref={eyebrowRef}
           className="text-xs font-medium uppercase tracking-[0.3em] text-[var(--accent)] sm:text-sm"
         >
-          AI Product Operator
-        </p>
-        <p
-          className="font-display mt-3 font-semibold leading-[0.92] tracking-[-0.02em] text-white"
-          style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
-        >
           Ahson Kamal
         </p>
+        <h1
+          className="font-display mt-3 max-w-4xl font-semibold leading-[1.02] tracking-[-0.02em] text-white"
+          style={{ fontSize: "clamp(2.1rem, 5vw, 3.9rem)" }}
+        >
+          {HERO_HEADLINE}
+        </h1>
         <p className="mt-5 max-w-xl text-base leading-snug text-white/80 sm:text-xl">
-          Complex technical systems, built end to end
-          <span className="text-white/50"> — across </span>
-          <WordFlip />
+          {HERO_SUBLINE}
         </p>
       </div>
 

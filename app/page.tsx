@@ -7,7 +7,6 @@ import Intersection from "@/app/components/Intersection";
 import Loader from "@/app/components/Loader";
 import LogoStrip from "@/app/components/LogoStrip";
 import ProofRow from "@/app/components/ProofRow";
-import SelectedWork from "@/app/components/SelectedWork";
 import SiteNav from "@/app/components/SiteNav";
 
 /**
@@ -50,9 +49,8 @@ export default function Home() {
         {/* 4. THE INTERSECTION - pinned isometric systems stack. */}
         <Intersection />
 
-        {/* 6. SELECTED WORK - kept light; placed before the morph so the
-               morph's settle into the "ai" mark leads STRAIGHT into the CTA. */}
-        <SelectedWork />
+        {/* Selected work is intentionally absent from this build - ventures
+               get a dedicated section later. */}
 
         {/* 5. WHAT I BUILD - particle moment #2 (signature): the emblem morph
                that settles into the "ai" mark and leads into the CTA. */}

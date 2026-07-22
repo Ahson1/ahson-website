@@ -4,17 +4,19 @@
 /**
  * The Intersection - the centrepiece.
  * ----------------------------------------------------------------------------
- * A pinned isometric "systems stack": five layers that light up cyan one at a
- * time as the visitor scroll-scrubs through the section. Each layer carries
- * one concrete proof line (site.config LAYERS). Precise and high-impact, not
- * busy: hairline plates, one accent, mono index.
+ * A pinned isometric "systems stack": four layers that light up cyan one at a
+ * time as the visitor scroll-scrubs through the section. Layer 01 (Product)
+ * sits on the TOP plate and is painted LAST, so it renders sharpest and gets
+ * seen first. Each plate carries a faint own-work artifact on its plane
+ * (site.config LAYERS[].artifact - own diagrams/UI only, never employer or
+ * client material); the active layer's artifact and plate light crisp + cyan.
  *
- * Desktop: ScrollTrigger pins the panel for 5 scrub segments.
- * Mobile / reduced motion: no pin - a vertical sequence of the five layers,
- * each block showing the stack with its own layer lit. Equal care, not a
- * squished desktop.
+ * Desktop: ScrollTrigger pins the panel for 4 scrub segments.
+ * Mobile / reduced motion: no pin - a vertical scroll-snap sequence of the
+ * four layers (globals.css .snap-layer), each block showing the stack with
+ * its own layer lit. Equal care, not a squished desktop.
  */
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { LAYERS } from "@/app/lib/site.config";
 import {
   gsap,
@@ -24,7 +26,8 @@ import {
   prefersReducedMotion,
 } from "@/app/lib/gsap";
 
-/** The isometric plate stack. `active` lights one layer. */
+/** The isometric plate stack. `active` lights one layer. Layers are painted
+ *  in REVERSE index order so layer 01 (top plate) paints last = sharpest. */
 function IsoStack({
   active,
   className = "",
@@ -32,36 +35,75 @@ function IsoStack({
   active: number;
   className?: string;
 }) {
+  const uid = useId();
+  const order = LAYERS.map((_, i) => i).reverse();
   return (
     <svg
-      viewBox="0 0 360 430"
+      viewBox="0 0 360 366"
       className={className}
       aria-hidden="true"
       fill="none"
     >
-      {LAYERS.map((layer, i) => (
-        <g
-          key={layer.key}
-          className={`iso-layer${i === active ? " is-active" : ""}`}
-          transform={`translate(0 ${i * 64})`}
-        >
-          <path
-            className="iso-plate"
-            d="M180 8 L326 81 L180 154 L34 81 Z"
-            strokeWidth="1.25"
-          />
-          <text
-            className="iso-tag font-mono-num"
-            x="10"
-            y="86"
-            fontSize="10"
-            letterSpacing="1.5"
+      <defs>
+        {/* One diamond clip in plate-local coords; each <image> sits inside
+            its layer's translated <g>, so the same clip fits every plate. */}
+        <clipPath id={`${uid}-plate`}>
+          <path d="M180 8 L326 81 L180 154 L34 81 Z" />
+        </clipPath>
+      </defs>
+      {order.map((i) => {
+        const layer = LAYERS[i];
+        return (
+          <g
+            key={layer.key}
+            className={`iso-layer${i === active ? " is-active" : ""}`}
+            transform={`translate(0 ${i * 64})`}
           >
-            {String(i + 1).padStart(2, "0")}
-          </text>
-        </g>
-      ))}
+            <path
+              className="iso-plate"
+              d="M180 8 L326 81 L180 154 L34 81 Z"
+              strokeWidth="1.25"
+            />
+            {/* Faint own-work artifact, clipped to the plate's plane. */}
+            <image
+              className="iso-artifact"
+              href={layer.artifact}
+              x="76"
+              y="30"
+              width="208"
+              height="102"
+              preserveAspectRatio="xMidYMid meet"
+              clipPath={`url(#${uid}-plate)`}
+            />
+            <text
+              className="iso-tag font-mono-num"
+              x="10"
+              y="86"
+              fontSize="10"
+              letterSpacing="1.5"
+            >
+              {String(i + 1).padStart(2, "0")}
+            </text>
+          </g>
+        );
+      })}
     </svg>
+  );
+}
+
+/** The mono skill chips under a layer's line. */
+function SkillChips({ skills }: { skills: string[] }) {
+  return (
+    <ul className="mt-6 flex flex-wrap gap-2">
+      {skills.map((s) => (
+        <li
+          key={s}
+          className="font-mono-num border border-[var(--hairline)] px-2.5 py-1 text-[11px] tracking-[0.06em] text-[var(--muted)]"
+        >
+          {s}
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -121,12 +163,13 @@ export default function Intersection() {
   );
 
   const layer = LAYERS[active];
+  const total = String(LAYERS.length).padStart(2, "0");
 
   return (
     <section
       id="intersection"
       ref={rootRef}
-      aria-label="The intersection - five layers of one system"
+      aria-label="The intersection - four layers of one system"
       className="relative"
     >
       {pinned ? (
@@ -139,7 +182,7 @@ export default function Intersection() {
             </div>
             <div>
               <p className="font-mono-num text-xs text-[var(--faint)]">
-                {String(active + 1).padStart(2, "0")} / 05
+                {String(active + 1).padStart(2, "0")} / {total}
               </p>
               <div ref={textRef} className="mt-4">
                 <h2 className="text-3xl font-medium tracking-tight sm:text-4xl">
@@ -148,22 +191,23 @@ export default function Intersection() {
                 <p className="mt-5 max-w-md text-lg leading-relaxed text-[var(--muted)]">
                   {layer.line}
                 </p>
+                <SkillChips skills={layer.skills} />
               </div>
             </div>
           </div>
         </div>
       ) : (
-        /* ---------- MOBILE / REDUCED MOTION: vertical layer sequence ------- */
+        /* ---------- MOBILE / REDUCED MOTION: vertical scroll-snap ---------- */
         <div className="px-6 py-10">
           <p className="tel-label mx-auto mb-2 max-w-5xl">The intersection</p>
           {LAYERS.map((l, i) => (
             <div
               key={l.key}
-              className="mx-auto flex min-h-[72vh] max-w-5xl flex-col justify-center py-10"
+              className="snap-layer mx-auto flex min-h-[72vh] max-w-5xl flex-col justify-center py-10"
             >
               <IsoStack active={i} className="w-full max-w-[240px]" />
               <p className="font-mono-num mt-6 text-xs text-[var(--faint)]">
-                {String(i + 1).padStart(2, "0")} / 05
+                {String(i + 1).padStart(2, "0")} / {total}
               </p>
               <h2 className="mt-2 text-2xl font-medium tracking-tight">
                 {l.title}
@@ -171,6 +215,7 @@ export default function Intersection() {
               <p className="mt-3 max-w-md text-base leading-relaxed text-[var(--muted)]">
                 {l.line}
               </p>
+              <SkillChips skills={l.skills} />
             </div>
           ))}
         </div>

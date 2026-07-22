@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+  <!-- PLACEHOLDER own-work artifact (layer 01 Product): swap with an image of
+       MY OWN discovery/strategy artifact. Own work only - never employer or
+       client material, never real patient/client data. -->
+  <rect x="8" y="10" width="60" height="34" rx="2"/>
+  <rect x="8" y="54" width="60" height="34" rx="2"/>
+  <path d="M68 27 H96 M68 71 H96 M96 27 V71"/>
+  <rect x="96" y="38" width="52" height="24" rx="2"/>
+  <path d="M148 50 H172"/>
+  <circle cx="186" cy="50" r="12"/>
+  <path d="M12 20 h30 M12 28 h44 M12 64 h36 M12 72 h24" stroke-width="1"/>
+</svg>

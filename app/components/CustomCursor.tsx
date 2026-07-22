@@ -44,16 +44,20 @@ export default function CustomCursor() {
     const dot = dotRef.current;
     if (!reticle || !dot) return;
 
-    const xRet = gsap.quickTo(reticle, "x", { duration: 0.4, ease: "power3" });
-    const yRet = gsap.quickTo(reticle, "y", { duration: 0.4, ease: "power3" });
-    const xDot = gsap.quickTo(dot, "x", { duration: 0.1, ease: "power3" });
-    const yDot = gsap.quickTo(dot, "y", { duration: 0.1, ease: "power3" });
+    // The dot IS the pointer: zero smoothing, set transform directly so it
+    // never trails. Only the reticle glides, and only just enough to read as
+    // an instrument (long durations here are what made the cursor feel slow).
+    const xRet = gsap.quickTo(reticle, "x", { duration: 0.16, ease: "power3" });
+    const yRet = gsap.quickTo(reticle, "y", { duration: 0.16, ease: "power3" });
+    const setDot = gsap.quickSetter(dot, "css") as (v: {
+      x: number;
+      y: number;
+    }) => void;
 
     let snapTarget: HTMLElement | null = null;
 
     const onMove = (e: PointerEvent) => {
-      xDot(e.clientX);
-      yDot(e.clientY);
+      setDot({ x: e.clientX, y: e.clientY });
       if (snapTarget) {
         // Locked: track the element (it may be drifting magnetically).
         const r = snapTarget.getBoundingClientRect();
