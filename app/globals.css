@@ -11,13 +11,13 @@
   value sampled from the real "ai" logo. Everything cyan derives from it.
 */
 :root {
-  --bg: #0b0b0d; /* off-black field - never pure black */
+  --bg: #0a1220; /* deep navy field - ambient water, never full black */
   --fg: #ededea; /* off-white text */
-  --hairline: #23242a; /* thin rules, tick marks, panel frames */
-  --muted: #97979d; /* secondary text, >=4.5:1 on --bg */
-  --faint: #55565e; /* tertiary labels / inactive telemetry */
+  --hairline: #202b3c; /* thin rules, tick marks, panel frames */
+  --muted: #97a0ad; /* secondary text, >=4.5:1 on --bg */
+  --faint: #556074; /* tertiary labels / inactive telemetry */
 
-  --accent: #35c9ff; /* PLACEHOLDER: exact hex from the "ai" logo */
+  --accent: #76d2ff; /* sampled from the real "ai" logo's cursor block */
   --accent-dim: color-mix(in oklab, var(--accent) 45%, transparent);
   --accent-ink: #062330; /* text sitting on an accent fill */
 
@@ -54,7 +54,11 @@ section[id] {
 }
 
 body {
-  background: var(--bg);
+  /* NO background here, deliberately. AmbientField's canvas is a -z-10 child
+     of body; body is not a stacking context, so negative-z children paint
+     BEHIND body's own background - an opaque fill here hides the ambient
+     water entirely. The html fill above paints on the root canvas, which is
+     the one layer guaranteed to sit behind the field. */
   color: var(--fg);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -379,17 +383,60 @@ h3,
   z-index: 100;
   display: grid;
   place-items: center;
-  background: #0a0e12;
+  background: var(--bg);
   clip-path: inset(0 0 0% 0);
   will-change: clip-path;
 }
 .loader-mark {
   will-change: transform, opacity;
 }
-.loader-mark img {
-  width: clamp(96px, 16vw, 148px);
+.loader-mark .ai-mark {
+  width: clamp(120px, 18vw, 168px);
   height: auto;
   display: block;
+}
+
+/*
+  ----------------------------------------------------------------------------
+  AI MARK - the inline SVG studio logo (AiMark.tsx)
+  ----------------------------------------------------------------------------
+  Cadence traced from the signature GIF: cursor blinks 400ms on / 400ms off;
+  the glow copy breathes over the GIF's full 2.4s loop. --ai-glow is the blur
+  radius in CSS px - override it where the mark renders small (nav, CTA).
+  Both animations are opacity-only past the static blur, and the global
+  reduced-motion rule freezes them (cursor rests visible).
+*/
+.ai-mark {
+  /* No width/height here: this rule outranks Tailwind utilities in source
+     order, so sizing stays with the call sites (h-* / w-* / .loader-mark). */
+  overflow: visible;
+  aspect-ratio: 114 / 50;
+}
+.ai-glow {
+  filter: blur(var(--ai-glow, 9px));
+  animation: ai-breathe 2.4s var(--ease-flow) infinite;
+}
+@keyframes ai-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+.ai-cursor {
+  animation: ai-blink 0.8s linear infinite;
+}
+@keyframes ai-blink {
+  0%,
+  49.9% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 
 /*

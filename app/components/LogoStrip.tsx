@@ -1,12 +1,12 @@
 /**
- * LogoStrip - "Companies I've worked with."
+ * LogoStrip - "Where I've built."
  * ----------------------------------------------------------------------------
  * External proof, placed high (right under the hero handoff). A slow marquee
  * of employer logos; hovering (or focusing) a logo pauses the strip and
  * reveals ONE resume-fact line beneath it.
  *
- * PLACEHOLDER CONTRACT SLOT 3: logos + fact lines live in site.config LOGOS;
- * grey labelled boxes now, real SVGs at the same filenames tomorrow.
+ * CONTRACT SLOT 3: logos + fact lines live in site.config LOGOS; real logos
+ * in place, normalised to white/mono at a consistent strip height.
  *
  * Marquee + hover are pure CSS (globals.css .marquee / .logo-cell) so this
  * stays a server component. Under reduced motion the track simply doesn't
@@ -27,7 +27,7 @@ function LogoRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
           <img
             src={logo.src}
             alt={ariaHidden ? "" : logo.name}
-            className="h-10 w-auto sm:h-12"
+            className="h-10 w-auto max-w-[150px] object-contain sm:h-12 sm:max-w-[180px]"
             loading="lazy"
           />
           <p className="logo-fact min-h-[2.5em] text-center text-xs leading-snug text-[var(--muted)]">
@@ -41,8 +41,8 @@ function LogoRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
 
 export default function LogoStrip() {
   return (
-    <section aria-label="Companies I've worked with" className="py-14 sm:py-16">
-      <p className="tel-label mb-8 text-center">Companies I&rsquo;ve worked with</p>
+    <section aria-label="Where I've built" className="py-14 sm:py-16">
+      <p className="tel-label mb-8 text-center">Where I&rsquo;ve built</p>
       <div className="marquee">
         <div className="marquee-track items-start">
           <LogoRow />

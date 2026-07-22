@@ -1,3 +1,4 @@
+import AmbientField from "@/app/components/AmbientField";
 import CapabilityMorph from "@/app/components/CapabilityMorph";
 import Cta from "@/app/components/Cta";
 import CustomCursor from "@/app/components/CustomCursor";
@@ -22,6 +23,10 @@ import SiteNav from "@/app/components/SiteNav";
 export default function Home() {
   return (
     <>
+      {/* Ambient water: fixed navy field + slow cyan drift, behind everything.
+          Sections stay transparent so the atmosphere reads through. */}
+      <AmbientField />
+
       <Loader />
       <SiteNav />
 
@@ -29,14 +34,15 @@ export default function Home() {
              coordinates / scroll signifier on the title card. */}
       <DiveScrubber />
 
-      <main className="relative bg-[var(--bg)]">
-        {/* Seamless handoff: deep-water blue -> instrument off-black. */}
+      <main className="relative">
+        {/* Seamless handoff: deep-water blue dissolving to transparent, so the
+            ambient navy field (and its drift) takes over underneath. */}
         <div
           aria-hidden="true"
           className="h-[42vh]"
           style={{
             background:
-              "linear-gradient(to bottom, var(--underwater-blue), var(--bg))",
+              "linear-gradient(to bottom, var(--underwater-blue), transparent)",
           }}
         />
 

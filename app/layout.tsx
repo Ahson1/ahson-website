@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Ahson Kamal | Complex technical systems, built end to end",
   description:
-    "Sydney. Product leader and technical founder. Ten years building voice and workflow AI in healthcare, where the edge cases are the job.",
+    "Sydney. Product leader and technical founder. A decade in healthtech, now building agentic systems that hold up in production.",
 };
 
 // Browser chrome sits on the instrument off-black.

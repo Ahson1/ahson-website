@@ -21,7 +21,14 @@
 
 import { useEffect, useRef, useState, type Ref } from "react";
 import ScrollCue from "@/app/components/ScrollCue";
-import { COORDS, HERO_HEADLINE, HERO_SUBLINE } from "@/app/lib/site.config";
+import {
+  COORDS,
+  CREDENTIAL,
+  CREDENTIAL_LOGO_SRC,
+  HERO_HEADLINE_LEAD,
+  HERO_HEADLINE_QUALIFIER,
+  HERO_SUBLINE,
+} from "@/app/lib/site.config";
 import {
   DPR_CAP,
   EYEBROW_LEAD_FRAMES,
@@ -54,8 +61,8 @@ const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
  *
  * Composition:
  *  - Upper-left: one quiet orienting line over the dead sky (negative space).
- *  - Lower-left over the calm water: amber eyebrow, then the name as the single
- *    largest element on the card.
+ *  - Lower-left over the calm water: the NAME huge, then the headline one step
+ *    down (eyebrowRef rides the headline so it leads the name into the sink).
  */
 function TitleCard({
   eyebrowRef,
@@ -86,24 +93,56 @@ function TitleCard({
         </p>
       </div>
 
-      {/* NAME + HEADLINE - the largest elements on the card, over the calm
-          lower water. The headline is STATIC (no word-flip); the subline
-          carries the positioning. */}
-      <div className="absolute bottom-0 left-0 max-w-[92vw] p-8 pb-24 sm:p-12 sm:pb-24">
-        <p
-          ref={eyebrowRef}
-          className="text-xs font-medium uppercase tracking-[0.3em] text-[var(--accent)] sm:text-sm"
+      {/* NAME + HEADLINE - the NAME is the single largest element on the card
+          (primary); the headline sits beneath it one type step down
+          (secondary). The subline carries the positioning, quietly. */}
+      {/* A soft dark text-shadow rides the whole block so the type holds its
+          edge over the bright water without needing a heavier scrim. */}
+      <div
+        className="absolute bottom-0 left-0 max-w-[94vw] p-8 pb-24 sm:p-12 sm:pb-24"
+        style={{
+          textShadow:
+            "0 2px 18px rgba(3, 12, 24, 0.55), 0 1px 3px rgba(3, 12, 24, 0.45)",
+        }}
+      >
+        <h1
+          className="font-display max-w-5xl font-semibold uppercase leading-[0.96] tracking-[-0.015em] text-white"
+          style={{ fontSize: "clamp(2.7rem, 8.5vw, 6.75rem)" }}
         >
           Ahson Kamal
-        </p>
-        <h1
-          className="font-display mt-3 max-w-4xl font-semibold leading-[1.02] tracking-[-0.02em] text-white"
-          style={{ fontSize: "clamp(2.1rem, 5vw, 3.9rem)" }}
-        >
-          {HERO_HEADLINE}
         </h1>
-        <p className="mt-5 max-w-xl text-base leading-snug text-white/80 sm:text-xl">
+        {/* Depth inside the headline itself: bright semibold lead clause,
+            then the qualifier a weight down in the muted accent tint. */}
+        <p
+          ref={eyebrowRef}
+          className="mt-5 max-w-2xl leading-snug tracking-tight"
+          style={{ fontSize: "clamp(1.3rem, 2.4vw, 1.9rem)" }}
+        >
+          <span className="font-semibold text-white">
+            {HERO_HEADLINE_LEAD}
+          </span>{" "}
+          <span
+            className="font-normal"
+            style={{
+              color: "color-mix(in oklab, var(--accent) 62%, #ffffff 38%)",
+            }}
+          >
+            {HERO_HEADLINE_QUALIFIER}
+          </span>
+        </p>
+        <p className="mt-4 max-w-xl text-sm leading-snug text-white/70 sm:text-base">
           {HERO_SUBLINE}
+        </p>
+        {/* Credential line: quiet, one step below the positioning, with the
+            USYD mark riding alongside at label height. */}
+        <p className="mt-3 flex items-center gap-2.5 text-xs text-white/50 sm:text-sm">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={CREDENTIAL_LOGO_SRC}
+            alt="University of Sydney"
+            className="h-6 w-auto opacity-70 sm:h-7"
+          />
+          <span>{CREDENTIAL}</span>
         </p>
       </div>
 

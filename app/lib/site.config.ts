@@ -14,8 +14,9 @@
  *  3. GLYPHS              -> public/assets/glyphs/{voice,rag,agents}.svg
  *                            (monoline placeholders; real glyphs at the same
  *                            filenames re-feed the particle sampler untouched)
- *  4. AI_MARK             -> public/assets/brand/ai-mark.svg (studio "ai"
- *                            logo; final morph target + CTA mark)
+ *  4. AI_MARK             -> public/assets/brand/ai-mark.svg (REAL mark, traced
+ *                            from the signature GIF's pixel grid; final morph
+ *                            target. Inline animated version: AiMark.tsx)
  *  5. ARTIFACTS           -> public/assets/artifacts/*.svg (one faint artifact
  *                            per intersection plate; MY OWN WORK ONLY - own
  *                            architecture diagram, own eval UI, ahson.studio
@@ -27,59 +28,65 @@
  * own ventures never appear in the employer logo strip.
  */
 
-/** HERO - static headline + subline (the word-flip is gone). */
-export const HERO_HEADLINE =
-  "Complex technical systems, built end to end in high-stakes environments.";
+/** HERO - static headline + subline (the word-flip is gone). The headline is
+ *  split so the lead clause renders bright and the qualifier renders in the
+ *  muted accent tint - depth via weight/colour contrast, not a gradient. */
+export const HERO_HEADLINE_LEAD =
+  "Complex technical systems, built end to end";
+export const HERO_HEADLINE_QUALIFIER = "in high-stakes environments.";
 export const HERO_SUBLINE =
-  "Product leader and technical founder. Ten years building voice and workflow AI in healthcare, where the edge cases are the job.";
+  "Product leader and technical founder. A decade in healthtech, now building agentic systems that hold up in production.";
 
 /** 2. LOGO STRIP - former EMPLOYERS ONLY (no own ventures), one resume-fact
- *  hover line each. PLACEHOLDER: grey labelled boxes; swap SVGs in place,
- *  rewrite `fact`s. No employer-internal numbers in fact lines. */
+ *  hover line each. Real logos in place, normalised to white/mono (incubate is
+ *  a PNG - no vector source exists). TBC fact lines are neutral descriptors;
+ *  swap with resume facts. No employer-internal numbers in fact lines. */
 export type LogoSlot = { name: string; src: string; fact: string };
 export const LOGOS: LogoSlot[] = [
   {
-    name: "HealthEngine",
-    src: "/assets/logos/healthengine.svg",
-    fact: "Built Australia's first AI virtual receptionist, 0 to 1",
-  },
-  {
     name: "Avoca",
     src: "/assets/logos/avoca.svg",
-    fact: "Founding PM on real-time radiology voice AI",
+    fact: "Founding PM, enterprise radiology voice AI",
   },
   {
-    name: "Logo slot 03",
-    src: "/assets/logos/logo-03.svg",
-    fact: "Placeholder fact line, swap with a resume fact",
+    name: "Next Practice",
+    src: "/assets/logos/next-practice.svg",
+    fact: "Developed the electronic health record from the ground up",
   },
   {
-    name: "Logo slot 04",
-    src: "/assets/logos/logo-04.svg",
-    fact: "Placeholder fact line, swap with a resume fact",
+    name: "MedicalDirector",
+    src: "/assets/logos/md.svg",
+    fact: "Medicare Webservices rollout across practices",
   },
   {
-    name: "Logo slot 05",
-    src: "/assets/logos/logo-05.svg",
-    fact: "Placeholder fact line, swap with a resume fact",
+    name: "Baraja",
+    src: "/assets/logos/baraja.svg",
+    fact: "Field application engineer, LiDAR for self-driving cars",
   },
   {
-    name: "Logo slot 06",
-    src: "/assets/logos/logo-06.svg",
-    fact: "Placeholder fact line, swap with a resume fact",
+    name: "HealthEngine",
+    src: "/assets/logos/healthengine.svg",
+    fact: "Led the AI vertical; built Australia's first AI virtual receptionist",
+  },
+  {
+    name: "INCUBATE",
+    src: "/assets/logos/incubate.png",
+    fact: "Built a medical device in the startup accelerator",
   },
 ];
+
+/** USYD sits with the hero credential line, not in the employer strip. */
+export const CREDENTIAL_LOGO_SRC = "/assets/logos/usyd.svg";
+export const CREDENTIAL = "B.Eng Biomedical, Mechanical major (Hons)";
 
 /** PROOF ROW - the approved safe stat set (mono numerals, odometer).
  *  Final slot replaced 1/25; PLACEHOLDER (TBC): confirm the current clean
  *  stat, value must stay resume-fact only. */
 export type Stat = { value: string; label: string };
 export const STATS: Stat[] = [
-  { value: "10", label: "years healthtech AI" },
-  { value: "200+", label: "practices" },
-  { value: "0→1", label: "AI receptionist" },
-  { value: "1", label: "full voice stack, built solo" },
-  { value: "100+", label: "user interviews" },
+  { value: "10", label: "years in healthtech" },
+  { value: "200+", label: "practices reached" },
+  { value: "100+", label: "clinical user interviews" },
   { value: "1,000+", label: "government test cases" },
 ];
 
@@ -148,8 +155,9 @@ export const AI_MARK_SRC = "/assets/brand/ai-mark.svg";
 export const COORDS = "33.8688° S, 151.2093° E";
 
 /** Contact + links. */
-export const CONTACT_EMAIL = "hello@ahson.com.au";
+export const CONTACT_EMAIL = "ahson@ahson.com.au";
 export const STUDIO_URL = "https://ahson.studio";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/ahsonkamal";
 
 /* SELECTED WORK is intentionally absent from this build: ventures (Locum
    Motion, Accelevate) get a dedicated section later, and never appear in the

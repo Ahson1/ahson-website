@@ -16,7 +16,7 @@
  * four layers (globals.css .snap-layer), each block showing the stack with
  * its own layer lit. Equal care, not a squished desktop.
  */
-import { useId, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { LAYERS } from "@/app/lib/site.config";
 import {
   gsap,
@@ -35,7 +35,6 @@ function IsoStack({
   active: number;
   className?: string;
 }) {
-  const uid = useId();
   const order = LAYERS.map((_, i) => i).reverse();
   return (
     <svg
@@ -44,13 +43,6 @@ function IsoStack({
       aria-hidden="true"
       fill="none"
     >
-      <defs>
-        {/* One diamond clip in plate-local coords; each <image> sits inside
-            its layer's translated <g>, so the same clip fits every plate. */}
-        <clipPath id={`${uid}-plate`}>
-          <path d="M180 8 L326 81 L180 154 L34 81 Z" />
-        </clipPath>
-      </defs>
       {order.map((i) => {
         const layer = LAYERS[i];
         return (
@@ -64,17 +56,23 @@ function IsoStack({
               d="M180 8 L326 81 L180 154 L34 81 Z"
               strokeWidth="1.25"
             />
-            {/* Faint own-work artifact, clipped to the plate's plane. */}
-            <image
-              className="iso-artifact"
-              href={layer.artifact}
-              x="76"
-              y="30"
-              width="208"
-              height="102"
-              preserveAspectRatio="xMidYMid meet"
-              clipPath={`url(#${uid}-plate)`}
-            />
+            {/* Faint own-work artifact, laid INTO the plate's plane. The
+                matrix maps the unit square onto the diamond: origin = top
+                vertex (180,8), x-axis = top->right edge (146,73), y-axis =
+                top->left edge (-146,73). The image keeps its own aspect
+                inside that square (meet), so it reads as a flat sheet
+                resting on the plate. */}
+            <g transform="matrix(146 73 -146 73 180 8)">
+              <image
+                className="iso-artifact"
+                href={layer.artifact}
+                x="0.06"
+                y="0.06"
+                width="0.88"
+                height="0.88"
+                preserveAspectRatio="xMidYMid meet"
+              />
+            </g>
             <text
               className="iso-tag font-mono-num"
               x="10"

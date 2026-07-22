@@ -13,6 +13,7 @@
  * begins at frame 0. Reduced motion skips the timeline and reveals statically.
  */
 import { useRef, useState } from "react";
+import AiMark from "@/app/components/AiMark";
 import {
   gsap,
   useGSAP,
@@ -118,10 +119,9 @@ export default function Loader() {
   return (
     <div ref={rootRef} className="loader" aria-hidden="true">
       <div ref={markRef} className="loader-mark">
-        {/* The mark is a glowing "a + cursor" on its own off-black field, which
-            matches the loader background, so no box edge shows. */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/brand/ahson-signature.gif" alt="" />
+        {/* Inline SVG "ai" mark: transparent, so it sits on the loader's navy
+            with no box edge, and the cursor blinks while the assets preload. */}
+        <AiMark />
       </div>
     </div>
   );

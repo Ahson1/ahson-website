@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" fill="none" stroke="#FFFFFF" stroke-width="1.5">
-  <!-- PLACEHOLDER own-work artifact (layer 01 Product): swap with an image of
-       MY OWN discovery/strategy artifact. Own work only - never employer or
-       client material, never real patient/client data. -->
-  <rect x="8" y="10" width="60" height="34" rx="2"/>
-  <rect x="8" y="54" width="60" height="34" rx="2"/>
-  <path d="M68 27 H96 M68 71 H96 M96 27 V71"/>
-  <rect x="96" y="38" width="52" height="24" rx="2"/>
-  <path d="M148 50 H172"/>
-  <circle cx="186" cy="50" r="12"/>
-  <path d="M12 20 h30 M12 28 h44 M12 64 h36 M12 72 h24" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Own-work artifact (layer 01 Product): monoline product-market-fit
+       glyph - an arrow landing dead centre of a target. Swap with MY OWN
+       product artifact. Own work only. -->
+  <circle cx="142" cy="55" r="36"/>
+  <circle cx="142" cy="55" r="24"/>
+  <circle cx="142" cy="55" r="12"/>
+  <circle cx="142" cy="55" r="3"/>
+  <path d="M34 19 L139 54"/>
+  <path d="M129 56 L142 55 L133 46"/>
+  <path d="M34 19 l-10 -8 M44 22 l-10 -8"/>
 </svg>

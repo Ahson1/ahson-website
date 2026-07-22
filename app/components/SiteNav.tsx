@@ -19,6 +19,9 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import AiMark from "@/app/components/AiMark";
+import LinkedInIcon from "@/app/components/LinkedInIcon";
+import { LINKEDIN_URL, STUDIO_URL } from "@/app/lib/site.config";
 
 /** Section links, in page order. `cta` gets the accent treatment. */
 const LINKS: { label: string; href: string; cta?: boolean; hideSm?: boolean }[] =
@@ -80,12 +83,14 @@ export default function SiteNav() {
           fill. The gradient keeps the left/right edges legible over any frame. */}
       <div className="border-b border-[var(--hairline)] bg-[color-mix(in_oklab,var(--bg)_78%,transparent)] backdrop-blur-md">
         <nav className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-6 sm:h-16 sm:px-8">
-          {/* Wordmark -> back to the top of the dive. */}
+          {/* Logo: the animated "ai" mark + wordmark -> back to the top. The
+              glow radius is a CSS px value, so it's dialled down to nav scale. */}
           <a
             href="#top"
-            className="text-sm font-medium tracking-tight text-[var(--fg)] transition-opacity duration-200 hover:opacity-70"
+            className="flex items-center gap-3 text-sm font-medium tracking-tight text-[var(--fg)] transition-opacity duration-200 hover:opacity-70"
           >
-            Ahson Kamal
+            <AiMark className="h-[18px] w-auto [--ai-glow:2px]" />
+            <span>Ahson Kamal</span>
           </a>
 
           <div className="flex items-center gap-5 sm:gap-7">
@@ -104,6 +109,25 @@ export default function SiteNav() {
                 {l.label}
               </a>
             ))}
+
+            {/* External presence: studio wordmark + LinkedIn glyph. */}
+            <a
+              href={STUDIO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden text-sm text-[var(--muted)] transition-colors duration-200 hover:text-[var(--fg)] sm:inline"
+            >
+              ahson.studio
+            </a>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="text-[var(--muted)] transition-colors duration-200 hover:text-[var(--fg)]"
+            >
+              <LinkedInIcon />
+            </a>
           </div>
         </nav>
       </div>

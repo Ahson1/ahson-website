@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Browser-tab icon: the studio "ai" mark on the site's navy tile (the
+       white glyph needs the tile to stay visible on light tab bars). -->
+  <rect width="64" height="64" rx="14" fill="#0a1220"/>
+  <g transform="translate(7 21) scale(0.4386)">
+    <g fill="#F7FDFF">
+      <rect x="10" y="0" width="50" height="10"/>
+      <rect x="50" y="10" width="20" height="10"/>
+      <rect x="10" y="20" width="60" height="10"/>
+      <rect x="0" y="30" width="20" height="10"/>
+      <rect x="50" y="30" width="20" height="10"/>
+      <rect x="10" y="40" width="60" height="10"/>
+    </g>
+    <rect x="84" y="0" width="30" height="50" fill="#76D2FF"/>
+  </g>
+</svg>

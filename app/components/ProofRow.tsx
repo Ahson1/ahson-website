@@ -232,7 +232,7 @@ export default function ProofRow() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 h-full w-full"
           />
-          <div className="relative grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 sm:gap-y-12">
+          <div className="relative grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 sm:gap-y-12">
             {STATS.map((s) => (
               <div key={s.label}>
                 <p className="text-3xl font-medium text-[var(--fg)] sm:text-4xl">

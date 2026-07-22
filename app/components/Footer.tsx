@@ -1,7 +1,13 @@
 /**
  * Footer - Sydney, links, connect, studio cross-link. Quiet telemetry close.
  */
-import { COORDS, CONTACT_EMAIL, STUDIO_URL } from "@/app/lib/site.config";
+import LinkedInIcon from "@/app/components/LinkedInIcon";
+import {
+  COORDS,
+  CONTACT_EMAIL,
+  LINKEDIN_URL,
+  STUDIO_URL,
+} from "@/app/lib/site.config";
 
 export default function Footer() {
   return (
@@ -24,11 +30,12 @@ export default function Footer() {
             Email
           </a>
           <a
-            className="transition-colors duration-200 hover:text-[var(--fg)]"
-            href="https://www.linkedin.com/in/ahsonkamal"
+            className="inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-[var(--fg)]"
+            href={LINKEDIN_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
+            <LinkedInIcon className="h-3.5 w-3.5" />
             LinkedIn
           </a>
           <a
