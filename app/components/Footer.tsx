@@ -25,6 +25,12 @@ export default function Footer() {
         >
           <a
             className="transition-colors duration-200 hover:text-[var(--fg)]"
+            href="/projects"
+          >
+            Projects
+          </a>
+          <a
+            className="transition-colors duration-200 hover:text-[var(--fg)]"
             href={`mailto:${CONTACT_EMAIL}`}
           >
             Email

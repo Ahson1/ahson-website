@@ -28,6 +28,7 @@ const LINKS: { label: string; href: string; cta?: boolean; hideSm?: boolean }[] 
   [
     { label: "Proof", href: "#proof", hideSm: true },
     { label: "Systems", href: "#intersection" },
+    { label: "Projects", href: "/projects" },
     { label: "Contact", href: "#contact", cta: true },
   ];
 
