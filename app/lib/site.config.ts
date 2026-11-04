@@ -66,7 +66,7 @@ export const LOGOS: LogoSlot[] = [
   {
     name: "HealthEngine",
     src: "/assets/logos/healthengine.svg",
-    fact: "Led the AI vertical; built Australia's first AI virtual receptionist",
+    fact: "Led the AI vertical; took an AI receptionist from pilot to national launch",
   },
   {
     name: "INCUBATE",
