@@ -22,7 +22,7 @@ import { LINKEDIN_URL } from "@/app/lib/site.config";
 export const metadata: Metadata = {
   title: "Projects | Ahson Kamal",
   description:
-    "Personal builds made with coding agents: a searchable knowledge vault, a VR room for rehearsing talks, and a YouTube triage tool.",
+    "Personal builds made with coding agents: a VR flight sim of Sydney, a searchable knowledge vault, a VR room for rehearsing talks, and a YouTube triage tool.",
 };
 
 type Step = { label: string; detail?: string };
@@ -151,6 +151,126 @@ function Project({
     </section>
   );
 }
+
+type Shot = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  caption?: string;
+};
+
+type LogStep = {
+  title: string;
+  body: string;
+  shots?: Shot[];
+  /** Real values from the headset's performance log (trimmed), shown as a mono block. */
+  log?: string[];
+};
+
+/**
+ * The build story for one project: numbered steps, each with a short
+ * explanation and, where there is one, a before/after pair of real frames.
+ */
+function BuildLog({ steps }: { steps: LogStep[] }) {
+  return (
+    <div className="mt-16">
+      <p className="tel-label mb-8">How it came together</p>
+      <ol className="grid gap-12">
+        {steps.map((s, i) => (
+          <li key={s.title} className="grid gap-6">
+            <div className="max-w-2xl">
+              <p className="font-mono text-xs text-[var(--accent)]">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="mt-2 text-xl font-medium tracking-tight">
+                {s.title}
+              </h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-[var(--muted)]">
+                {s.body}
+              </p>
+            </div>
+            {s.shots ? (
+              <div
+                className={
+                  "grid gap-6 sm:grid-cols-2 " +
+                  (s.shots[0].height > s.shots[0].width ? "max-w-2xl" : "")
+                }
+              >
+                {s.shots.map((f) => (
+                  <Figure key={f.src} {...f} />
+                ))}
+              </div>
+            ) : null}
+            {s.log ? (
+              <div className="frame overflow-x-auto px-4 py-4 sm:px-5">
+                <CornerFrame />
+                <pre className="font-mono text-xs leading-relaxed text-[var(--muted)]">
+                  {s.log.join("\n")}
+                </pre>
+              </div>
+            ) : null}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+const FLIGHT_SIM_LOG: LogStep[] = [
+  {
+    title: "Read the plane straight from X-Plane",
+    body: "X-Plane keeps its aircraft in its own text format, with each moving part tied to a cockpit control or gauge. The first render came out inside out: X-Plane orders the corners of its triangles the opposite way to Three.js, so every surface faced backwards until the order was flipped.",
+  },
+  {
+    title: "Sharp on a screen, blurry in the headset",
+    body: "On the headset the scenery never sharpened. Logs sent back from the Quest showed tiles stopped downloading the moment VR started: the Quest pauses the page's normal frame timer during VR, and the tile streamer was scheduled on it. I reproduced it on my Mac with Meta's WebXR emulator, then moved tile loading onto the headset's own frame loop.",
+    shots: [
+      {
+        src: "/projects/flight-vr-before.webp",
+        width: 631,
+        height: 867,
+        alt: "Headset view behind the plane over Bondi, with blurry, blocky scenery and a smeared slab of low-detail ground.",
+        caption: "Before: stuck on the coarse tiles loaded before VR started.",
+      },
+      {
+        src: "/projects/flight-vr-after.webp",
+        width: 631,
+        height: 867,
+        alt: "The same headset view with sharp coastline, suburbs and a rock reef in the water.",
+        caption: "After: the same view once tiles load in VR. Both frames from Meta's WebXR emulator.",
+      },
+    ],
+  },
+  {
+    title: "Squares in the harbour",
+    body: "Google photographs neighbouring patches of water on different days, so some arrive with sun glare or haze baked in and the harbour looks like a patchwork. Water is now picked out by its height and flatness and drawn in one consistent colour, keeping a little of the photo up close for reefs and shallows.",
+    shots: [
+      {
+        src: "/projects/flight-water-before.webp",
+        width: 1200,
+        height: 675,
+        alt: "Sydney Harbour from above Mosman with obvious dark and turquoise rectangular patches in the water.",
+        caption: "Before: the photo water as delivered, in patches.",
+      },
+      {
+        src: "/projects/flight-water-after.webp",
+        width: 1200,
+        height: 675,
+        alt: "The same view with the harbour in one consistent dark blue, with ripples.",
+        caption: "After: one surface, with ripples and sky reflection.",
+      },
+    ],
+  },
+  {
+    title: "Tuned from the headset's own numbers",
+    body: "Every ten seconds the headset reports its frame rate, draw calls and loaded tiles back to my Mac. Those numbers showed early flights running well below the Quest's 72 frames a second on the High setting, so scenery detail now adjusts itself to hold the frame rate.",
+    log: [
+      "perf[VR]: 19 fps · 258 calls · 534k tris · tiles 87 vis · 450MB · high",
+      "perf[VR]: 34 fps · 456 calls · 839k tris · tiles 137 vis · 452MB · high",
+    ],
+  },
+];
 
 /** Real rows from the YT Triage Notion database (Oct 2026 snapshot). */
 const TRIAGE_ROWS = [
@@ -296,9 +416,10 @@ export default function Projects() {
             </p>
             <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm">
               {[
-                ["#cerebrum", "01 Cerebrum"],
-                ["#rehearsal", "02 VR rehearsal room"],
-                ["#yt-triage", "03 YT Triage"],
+                ["#flight-sim", "01 Sydney VR flight sim"],
+                ["#cerebrum", "02 Cerebrum"],
+                ["#rehearsal", "03 VR rehearsal room"],
+                ["#yt-triage", "04 YT Triage"],
               ].map(([href, label]) => (
                 <li key={href}>
                   <a
@@ -315,6 +436,62 @@ export default function Projects() {
 
         <Project
           index="01"
+          id="flight-sim"
+          name="Sydney VR flight sim"
+          title="A flight sim of Sydney that runs on a Quest 2"
+          lead="A Cirrus SR22 I fly around Sydney Harbour, Bondi and the Northern Beaches on a Meta Quest 2, over Google's photorealistic 3D city, reaching out to grab the stick and throttle."
+          when="November 2026"
+          stack="Three.js, WebXR, Google Photorealistic 3D Tiles, X-Plane 12 aircraft files"
+          flow={[
+            { label: "Google 3D Tiles", detail: "streamed as I fly" },
+            { label: "X-Plane SR22", detail: "read from its own files" },
+            { label: "Flight model", detail: "per surface, 120 Hz" },
+            { label: "WebXR", detail: "in the Quest browser" },
+            { label: "My hands", detail: "grab stick and throttle" },
+          ]}
+          points={[
+            "The aircraft is the Cirrus SR22 from my own copy of X-Plane 12. A parser written for this reads X-Plane's model files directly, so the stick, throttle and flaps move with the controls and both Garmin screens show live flight data.",
+            "Google's photorealistic 3D city streams in as I fly. A water shader finds the harbour and adds ripples, sky reflections and sun glitter, and ferries run the real routes from Circular Quay to Manly, Taronga and up the Parramatta River.",
+            "The physics treats each wing panel, the tail, the propeller and each wheel separately, 120 times a second. Takeoffs start from real runway ends at Sydney Airport and Bankstown, and scenery detail eases off by itself when the frame rate drops.",
+          ]}
+        >
+          <div className="grid gap-6">
+            <Figure
+              src="/projects/flight-cockpit.webp"
+              width={1600}
+              height={900}
+              alt="The view from the pilot's seat of a Cirrus SR22 over Sydney Harbour, with the Garmin screens on the panel and the city skyline ahead."
+              caption="Over the nose, heading up the harbour towards the city. Aircraft: Laminar Research's X-Plane 12 Cirrus SR22, loaded from my own copy for personal use and not distributed. Scenery: Google Maps."
+            />
+            <div className="grid gap-6 sm:grid-cols-3">
+              <Figure
+                src="/projects/flight-harbour.webp"
+                width={1600}
+                height={900}
+                alt="Chase view behind the plane over the harbour, with the Harbour Bridge, Opera House and city skyline ahead."
+                caption="West of the Bridge."
+              />
+              <Figure
+                src="/projects/flight-bondi.webp"
+                width={1600}
+                height={900}
+                alt="Chase view behind the plane off Bondi, with the beach on the left and open ocean on the right."
+                caption="Off Bondi."
+              />
+              <Figure
+                src="/projects/flight-manly.webp"
+                width={1600}
+                height={900}
+                alt="Chase view behind the plane over Manly, heading up the Northern Beaches coastline."
+                caption="Manly, heading up the Northern Beaches."
+              />
+            </div>
+          </div>
+          <BuildLog steps={FLIGHT_SIM_LOG} />
+        </Project>
+
+        <Project
+          index="02"
           id="cerebrum"
           name="Cerebrum"
           title="A second brain that knows when it doesn't know"
@@ -344,7 +521,7 @@ export default function Projects() {
         </Project>
 
         <Project
-          index="02"
+          index="03"
           id="rehearsal"
           name="VR rehearsal room"
           title="A room to practise a talk in before giving it"
@@ -390,7 +567,7 @@ export default function Projects() {
         </Project>
 
         <Project
-          index="03"
+          index="04"
           id="yt-triage"
           name="YT Triage"
           title="Decide whether a video is worth it before watching it"
