@@ -86,7 +86,7 @@ export const STATS: Stat[] = [
   { value: "10", label: "years in healthtech" },
   { value: "200+", label: "practices reached" },
   { value: "100+", label: "clinical user interviews" },
-  { value: "1,000+", label: "government test cases" },
+  { value: "1,000+", label: "Medicare Webservices test cases" },
 ];
 
 /** THE INTERSECTION - 4 layers (Product, AI & Systems, Commercial, Design).
