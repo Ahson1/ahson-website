@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {
+  OG_IMAGE,
   PERSON_JSONLD,
   SEO_DESCRIPTION,
   SEO_TITLE,
@@ -32,11 +33,20 @@ export const metadata: Metadata = {
     title: SEO_TITLE,
     description: SEO_DESCRIPTION,
     locale: "en_AU",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Ahson Kamal at the Australian AI Awards 2026",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: SEO_TITLE,
     description: SEO_DESCRIPTION,
+    images: [OG_IMAGE],
   },
 };
 

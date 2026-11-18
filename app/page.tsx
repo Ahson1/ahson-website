@@ -9,6 +9,7 @@ import Intersection from "@/app/components/Intersection";
 import Loader from "@/app/components/Loader";
 import LogoStrip from "@/app/components/LogoStrip";
 import ProofRow from "@/app/components/ProofRow";
+import Recognition from "@/app/components/Recognition";
 import SiteNav from "@/app/components/SiteNav";
 
 export const metadata: Metadata = { alternates: { canonical: "/" } };
@@ -54,6 +55,9 @@ export default function Home() {
 
         {/* 3. PROOF - odometer row. Particle moment #1 (subtle). */}
         <ProofRow />
+
+        {/* 3b. RECOGNITION - awards photo + speaking. Static. */}
+        <Recognition />
 
         {/* 4. THE INTERSECTION - pinned isometric systems stack. */}
         <Intersection />

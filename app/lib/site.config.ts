@@ -162,6 +162,35 @@ export const LINKEDIN_URL = "https://www.linkedin.com/in/ahsonkamal";
    Motion, Accelevate) get a dedicated section later, and never appear in the
    employer logo strip above. */
 
+/** RECOGNITION - awards photo + speaking list (Recognition.tsx). Newest
+ *  first. Public facts only. */
+export const RECOGNITION = {
+  award: {
+    event: "Australian AI Awards 2026",
+    title: "Finalist",
+    category: "AI Leader of the Year (SME)",
+  },
+  photo: {
+    src: "/assets/recognition/ahson-kamal-australian-ai-awards-2026.jpg",
+    alt: "Ahson Kamal holding his finalist trophy at the Australian AI Awards 2026 in Sydney",
+    width: 900,
+    height: 1350,
+  },
+  speaking: [
+    {
+      date: "25 Nov 2026",
+      title: "Beyond the Demo: Building AI Agents You Can Trust",
+      where: "Tech Talk, FACTS Summit, ICC Sydney",
+    },
+    {
+      date: "2 Jul 2026",
+      title: "Panel speaker",
+      where: "HealthHaus Sydney",
+    },
+  ],
+};
+export const OG_IMAGE = "/assets/recognition/og-ahson-kamal.jpg";
+
 /** SEARCH - one source of truth for the title, description and the Person
  *  structured data in app/layout.tsx. Resume-fact only, same guardrails as the
  *  copy above. Add worksFor / more sameAs links here when ready. */
@@ -174,6 +203,7 @@ export const PERSON_JSONLD = {
   "@type": "Person",
   name: "Ahson Kamal",
   url: SITE_URL,
+  image: `${SITE_URL}${RECOGNITION.photo.src}`,
   email: `mailto:${CONTACT_EMAIL}`,
   jobTitle: "Technical founder and product leader",
   description: SEO_DESCRIPTION,
