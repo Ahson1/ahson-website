@@ -23,8 +23,8 @@
  *                            never real patient/client data.)
  *
  * GUARDRAILS: every copy string below is resume-fact only. No employer-internal
- * client metrics. No em dashes anywhere in copy. Keep Accelevate low-profile;
- * own ventures never appear in the employer logo strip.
+ * client metrics. No em dashes anywhere in copy. Accelevate is named (Founder
+ * and CEO, Nov 2026); own ventures never appear in the employer logo strip.
  */
 
 /** HERO - static headline + subline (the word-flip is gone). The headline is
@@ -34,7 +34,7 @@ export const HERO_HEADLINE_LEAD =
   "Complex technical systems, built end to end";
 export const HERO_HEADLINE_QUALIFIER = "in high-stakes environments.";
 export const HERO_SUBLINE =
-  "Product leader and technical founder. A decade in healthtech, now building agentic systems that hold up in production.";
+  "Founder and CEO of Accelevate. A decade in healthtech, now building voice AI and agentic systems that hold up in production.";
 
 /** 2. LOGO STRIP - former EMPLOYERS ONLY (no own ventures), one resume-fact
  *  hover line each. Real logos in place, normalised to white/mono (incubate is
@@ -155,8 +155,9 @@ export const COORDS = "33.8688° S, 151.2093° E";
 
 /** Contact + links. */
 export const CONTACT_EMAIL = "ahson@ahson.com.au";
+export const ACCELEVATE_URL = "https://accelevate.com.au";
 export const SITE_URL = "https://ahson.com.au";
-export const LINKEDIN_URL = "https://www.linkedin.com/in/ahsonkamal";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/ahson-kamal";
 
 /* SELECTED WORK is intentionally absent from this build: ventures (Locum
    Motion, Accelevate) get a dedicated section later, and never appear in the
@@ -195,9 +196,9 @@ export const OG_IMAGE = "/assets/recognition/og-ahson-kamal.jpg";
  *  structured data in app/layout.tsx. Resume-fact only, same guardrails as the
  *  copy above. Add worksFor / more sameAs links here when ready. */
 export const SEO_TITLE =
-  "Ahson Kamal | Technical founder and product leader, Sydney";
+  "Ahson Kamal | Founder and CEO of Accelevate, Sydney";
 export const SEO_DESCRIPTION =
-  "Ahson Kamal is a Sydney technical founder and product leader. A decade in Australian healthtech, now building voice AI and agentic systems that hold up in production. Finalist, AI Leader of the Year (SME), Australian AI Awards 2026.";
+  "Ahson Kamal is the Founder and CEO of Accelevate, the AI voice receptionist, based in Sydney. A decade in Australian healthtech, now building voice AI and agentic systems that hold up in production. Finalist, AI Leader of the Year (SME), Australian AI Awards 2026.";
 export const PERSON_JSONLD = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -205,7 +206,12 @@ export const PERSON_JSONLD = {
   url: SITE_URL,
   image: `${SITE_URL}${RECOGNITION.photo.src}`,
   email: `mailto:${CONTACT_EMAIL}`,
-  jobTitle: "Technical founder and product leader",
+  jobTitle: "Founder and CEO",
+  worksFor: {
+    "@type": "Organization",
+    name: "Accelevate",
+    url: ACCELEVATE_URL,
+  },
   description: SEO_DESCRIPTION,
   address: {
     "@type": "PostalAddress",
