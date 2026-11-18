@@ -204,7 +204,7 @@ export default function CapabilityMorph() {
       {mode === "static" ? (
         /* ---------- REDUCED MOTION: static glyph grid ---------- */
         <div className="mx-auto max-w-5xl px-6 py-24">
-          <p className="tel-label mb-10">What I build</p>
+          <h2 className="tel-label mb-10">What I build</h2>
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
             {MORPH_GLYPHS.map((g) => (
               <figure key={g.key} className="flex flex-col items-center gap-4">
@@ -231,7 +231,7 @@ export default function CapabilityMorph() {
           ref={stageRef}
           className="flex h-screen flex-col items-center justify-center px-6"
         >
-          <p className="tel-label mb-6">What I build</p>
+          <h2 className="tel-label mb-6">What I build</h2>
           <canvas
             ref={canvasRef}
             aria-hidden="true"

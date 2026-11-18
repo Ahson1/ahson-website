@@ -224,7 +224,7 @@ export default function ProofRow() {
   return (
     <section id="proof" ref={rootRef} className="px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-5xl">
-        <p className="tel-label mb-6">Proof / measured</p>
+        <h2 className="tel-label mb-6">Proof / measured</h2>
         <div ref={panelRef} className="frame relative px-6 py-10 sm:px-10 sm:py-12">
           <CornerFrame />
           <canvas

@@ -21,7 +21,7 @@
 import { useEffect, useRef, useState } from "react";
 import AiMark from "@/app/components/AiMark";
 import LinkedInIcon from "@/app/components/LinkedInIcon";
-import { LINKEDIN_URL, STUDIO_URL } from "@/app/lib/site.config";
+import { LINKEDIN_URL } from "@/app/lib/site.config";
 
 /** Section links, in page order. `cta` gets the accent treatment. */
 const LINKS: { label: string; href: string; cta?: boolean; hideSm?: boolean }[] =
@@ -111,15 +111,7 @@ export default function SiteNav() {
               </a>
             ))}
 
-            {/* External presence: studio wordmark + LinkedIn glyph. */}
-            <a
-              href={STUDIO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden text-sm text-[var(--muted)] transition-colors duration-200 hover:text-[var(--fg)] sm:inline"
-            >
-              ahson.studio
-            </a>
+            {/* External presence: LinkedIn glyph. */}
             <a
               href={LINKEDIN_URL}
               target="_blank"

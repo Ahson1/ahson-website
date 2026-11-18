@@ -1,12 +1,11 @@
 /**
- * Footer - Sydney, links, connect, studio cross-link. Quiet telemetry close.
+ * Footer - Sydney, links, connect. Quiet telemetry close.
  */
 import LinkedInIcon from "@/app/components/LinkedInIcon";
 import {
   COORDS,
   CONTACT_EMAIL,
   LINKEDIN_URL,
-  STUDIO_URL,
 } from "@/app/lib/site.config";
 
 export default function Footer() {
@@ -43,14 +42,6 @@ export default function Footer() {
           >
             <LinkedInIcon className="h-3.5 w-3.5" />
             LinkedIn
-          </a>
-          <a
-            className="transition-colors duration-200 hover:text-[var(--fg)]"
-            href={STUDIO_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            designed by ahson.studio
           </a>
         </nav>
       </div>

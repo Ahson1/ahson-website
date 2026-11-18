@@ -9,7 +9,11 @@
 import { useEffect, useRef, useState } from "react";
 import { CONTACT_EMAIL } from "@/app/lib/site.config";
 
-export default function ContactButton() {
+export default function ContactButton({
+  variant = "quiet",
+}: {
+  variant?: "quiet" | "accent";
+}) {
   const [copied, setCopied] = useState(false);
   const timer = useRef<number>(0);
 
@@ -32,7 +36,7 @@ export default function ContactButton() {
     <a
       href={`mailto:${CONTACT_EMAIL}`}
       data-magnetic
-      className="btn-quiet"
+      className={variant === "accent" ? "btn-accent" : "btn-quiet"}
       onClick={onClick}
       aria-live="polite"
       title={CONTACT_EMAIL}

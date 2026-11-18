@@ -42,7 +42,7 @@ function LogoRow({ ariaHidden = false }: { ariaHidden?: boolean }) {
 export default function LogoStrip() {
   return (
     <section aria-label="Where I've built" className="py-14 sm:py-16">
-      <p className="tel-label mb-8 text-center">Where I&rsquo;ve built</p>
+      <h2 className="tel-label mb-8 text-center">Where I&rsquo;ve built</h2>
       <div className="marquee">
         <div className="marquee-track items-start">
           <LogoRow />

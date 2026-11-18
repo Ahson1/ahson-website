@@ -19,8 +19,7 @@
  *                            target. Inline animated version: AiMark.tsx)
  *  5. ARTIFACTS           -> public/assets/artifacts/*.svg (one faint artifact
  *                            per intersection plate; MY OWN WORK ONLY - own
- *                            architecture diagram, own eval UI, ahson.studio
- *                            screenshot. Never employer/client dashboards,
+ *                            architecture diagram, own eval UI. Never employer/client dashboards,
  *                            never real patient/client data.)
  *
  * GUARDRAILS: every copy string below is resume-fact only. No employer-internal
@@ -137,7 +136,7 @@ export const LAYERS: Layer[] = [
 ];
 
 /** 3./4. CAPABILITY GLYPHS - the particle-morph sequence, in order. The final
- *  state is the studio "ai" mark and leads into the CTA. PLACEHOLDER SVGs;
+ *  state is the personal "ai" mark and leads into the CTA. PLACEHOLDER SVGs;
  *  swap files in place (white strokes on transparent - the sampler reads
  *  alpha). */
 export type Glyph = { key: string; src: string; label: string };
@@ -145,10 +144,10 @@ export const MORPH_GLYPHS: Glyph[] = [
   { key: "voice", src: "/assets/glyphs/voice.svg", label: "Voice AI, end to end" },
   { key: "rag", src: "/assets/glyphs/rag.svg", label: "Retrieval with auditability" },
   { key: "agents", src: "/assets/glyphs/agents.svg", label: "Agentic systems that hold" },
-  { key: "ai-mark", src: "/assets/brand/ai-mark.svg", label: "ahson.studio" },
+  { key: "ai-mark", src: "/assets/brand/ai-mark.svg", label: "Ahson Kamal" },
 ];
 
-/** 4. The studio mark on its own (CTA, footer). */
+/** 4. The "ai" mark on its own (CTA, nav). */
 export const AI_MARK_SRC = "/assets/brand/ai-mark.svg";
 
 /** Coordinates - real, Sydney. */
@@ -156,9 +155,46 @@ export const COORDS = "33.8688° S, 151.2093° E";
 
 /** Contact + links. */
 export const CONTACT_EMAIL = "ahson@ahson.com.au";
-export const STUDIO_URL = "https://ahson.studio";
+export const SITE_URL = "https://ahson.com.au";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/ahsonkamal";
 
 /* SELECTED WORK is intentionally absent from this build: ventures (Locum
    Motion, Accelevate) get a dedicated section later, and never appear in the
    employer logo strip above. */
+
+/** SEARCH - one source of truth for the title, description and the Person
+ *  structured data in app/layout.tsx. Resume-fact only, same guardrails as the
+ *  copy above. Add worksFor / more sameAs links here when ready. */
+export const SEO_TITLE =
+  "Ahson Kamal | Technical founder and product leader, Sydney";
+export const SEO_DESCRIPTION =
+  "Ahson Kamal is a Sydney technical founder and product leader. A decade in Australian healthtech, now building voice AI and agentic systems that hold up in production. Finalist, AI Leader of the Year (SME), Australian AI Awards 2026.";
+export const PERSON_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Ahson Kamal",
+  url: SITE_URL,
+  email: `mailto:${CONTACT_EMAIL}`,
+  jobTitle: "Technical founder and product leader",
+  description: SEO_DESCRIPTION,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Sydney",
+    addressRegion: "NSW",
+    addressCountry: "AU",
+  },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "University of Sydney",
+  },
+  award: "Finalist, AI Leader of the Year (SME), Australian AI Awards 2026",
+  knowsAbout: [
+    "Voice AI",
+    "Agentic systems",
+    "Retrieval-augmented generation",
+    "AI evaluation",
+    "Healthcare technology",
+    "Product management",
+  ],
+  sameAs: [LINKEDIN_URL],
+};

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import AmbientField from "@/app/components/AmbientField";
 import CapabilityMorph from "@/app/components/CapabilityMorph";
 import Cta from "@/app/components/Cta";
@@ -9,6 +10,8 @@ import Loader from "@/app/components/Loader";
 import LogoStrip from "@/app/components/LogoStrip";
 import ProofRow from "@/app/components/ProofRow";
 import SiteNav from "@/app/components/SiteNav";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 /**
  * Home - the Instrument redesign.

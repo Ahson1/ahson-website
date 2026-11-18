@@ -21,6 +21,7 @@ import { LINKEDIN_URL } from "@/app/lib/site.config";
 
 export const metadata: Metadata = {
   title: "Projects | Ahson Kamal",
+  alternates: { canonical: "/projects" },
   description:
     "Personal builds made with coding agents: a VR flight sim of Sydney, a searchable knowledge vault, a VR room for rehearsing talks, and a YouTube triage tool.",
 };
