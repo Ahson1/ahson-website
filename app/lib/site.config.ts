@@ -192,6 +192,16 @@ export const RECOGNITION = {
 };
 export const OG_IMAGE = "/assets/recognition/og-ahson-kamal.jpg";
 
+/** ABOUT - third-person bio (About.tsx). First paragraph is the one-line
+ *  version people can lift for a speaker intro. Resume-fact only, no em
+ *  dashes, no employer-internal metrics. */
+export const ABOUT_BIO: string[] = [
+  "Ahson Kamal (pronounced \u201cEssen\u201d) is the Founder and CEO of Accelevate, an AI voice receptionist company based in Sydney.",
+  "He has spent a decade in Australian healthtech. At HealthEngine he led the AI vertical and took Helen, an AI receptionist for GP clinics, from pilot to national launch. He was the founding product manager at Avoca, building enterprise voice AI for radiology.",
+  "Before that he worked on the Medicare Webservices rollout at MedicalDirector, built an electronic health record from the ground up at Next Practice, and worked as a field application engineer on LiDAR for self-driving cars at Baraja. He holds a Bachelor of Engineering in Biomedical Engineering with a Mechanical major and Honours from the University of Sydney.",
+  "In 2026 he was named a finalist for AI Leader of the Year (SME) at the Australian AI Awards.",
+];
+
 /** SEARCH - one source of truth for the title, description and the Person
  *  structured data in app/layout.tsx. Resume-fact only, same guardrails as the
  *  copy above. Add worksFor / more sameAs links here when ready. */

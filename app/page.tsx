@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import About from "@/app/components/About";
 import AmbientField from "@/app/components/AmbientField";
 import CapabilityMorph from "@/app/components/CapabilityMorph";
 import Cta from "@/app/components/Cta";
@@ -58,6 +59,9 @@ export default function Home() {
 
         {/* 3b. RECOGNITION - awards photo + speaking. Static. */}
         <Recognition />
+
+        {/* 3c. ABOUT - quotable third-person bio. Static. */}
+        <About />
 
         {/* 4. THE INTERSECTION - pinned isometric systems stack. */}
         <Intersection />
