@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   title: "Projects | Ahson Kamal",
   alternates: { canonical: "/projects" },
   description:
-    "Personal builds made with coding agents: a VR flight sim of Sydney, a searchable knowledge vault, a VR room for rehearsing talks, and a YouTube triage tool.",
+    "Personal builds made with coding agents: a VR flight sim of Sydney, a searchable knowledge vault and the learning app built from it, a VR room for rehearsing talks, and a YouTube triage tool.",
 };
 
 type Step = { label: string; detail?: string };
@@ -419,8 +419,9 @@ export default function Projects() {
               {[
                 ["#flight-sim", "01 Sydney VR flight sim"],
                 ["#cerebrum", "02 Cerebrum"],
-                ["#rehearsal", "03 VR rehearsal room"],
-                ["#yt-triage", "04 YT Triage"],
+                ["#cerebrum-app", "03 Cerebrum app"],
+                ["#rehearsal", "04 VR rehearsal room"],
+                ["#yt-triage", "05 YT Triage"],
               ].map(([href, label]) => (
                 <li key={href}>
                   <a
@@ -523,6 +524,52 @@ export default function Projects() {
 
         <Project
           index="03"
+          id="cerebrum-app"
+          name="Cerebrum app"
+          title="My knowledge vault, turned into an app for learning"
+          lead="Searching the vault answers questions, but it doesn't teach me what's in it. So I built an app from it: short ideas from 33 business books, one at a time, with search, links between fields and quick questions that check what stuck."
+          when="November 2026, submitting to the App Store and Google Play"
+          stack="React Native, Expo, TypeScript, SQLite, Claude"
+          flow={[
+            { label: "Vault", detail: "books and courses" },
+            { label: "Books only", detail: "3,012 notes, 33 books" },
+            { label: "Audits", detail: "accuracy and wording" },
+            { label: "App", detail: "feed, search, map" },
+            { label: "Daily idea", detail: "a hook or a question" },
+          ]}
+          points={[
+            "Only notes from books made it in. Every note was checked against its source for details that weren't there and for wording too close to the original, and anything that failed was rewritten or left out.",
+            "A feed of one idea at a time that opens into the full note, search across every note and book, 195 curated links between ideas from different fields, and a map of each idea's neighbours.",
+            "Each day's notification carries one real idea, or a question about something I've already read with three books as the answer buttons. The answer is always a fact from the note itself, so the quiz can't invent anything.",
+          ]}
+        >
+          <div className="grid grid-cols-3 gap-3 sm:gap-6">
+            <Figure
+              src="/projects/cerebrum-app-feed.webp"
+              width={645}
+              height={1398}
+              alt="The Cerebrum app feed: a single card tagged Growth with a large serif headline about failed marketplaces, a short explanation underneath and the source book at the bottom."
+              caption="The feed, one idea at a time."
+            />
+            <Figure
+              src="/projects/cerebrum-app-quiz.webp"
+              width={645}
+              height={1398}
+              alt="A quiz screen asking which book a line about Medtronic and pacemakers in India is from, with Competing Against Luck marked correct."
+              caption="A quick question, answered from a notification."
+            />
+            <Figure
+              src="/projects/cerebrum-app-search.webp"
+              width={645}
+              height={1398}
+              alt="Search results for the word pricing: cards for pricing ideas from several books, each with a topic tag, title, one-line hook and source."
+              caption="Search across every note and book."
+            />
+          </div>
+        </Project>
+
+        <Project
+          index="04"
           id="rehearsal"
           name="VR rehearsal room"
           title="A room to practise a talk in before giving it"
@@ -568,7 +615,7 @@ export default function Projects() {
         </Project>
 
         <Project
-          index="04"
+          index="05"
           id="yt-triage"
           name="YT Triage"
           title="Decide whether a video is worth it before watching it"
